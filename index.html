@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LD SmartLab - Cursos de Informática y Ofimática</title>
-    <!-- Font Awesome para iconos -->
+    <title>LD SmartLab - Cursos de Informática, Ofimática, IA e Idiomas</title>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,7 +24,6 @@
             --gradient-end: #8b5cf6;
             --gradient: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
             --accent: #7c3aed;
-            --accent-hover: #6d28d9;
             --radius: 20px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --font: 'Inter', sans-serif;
@@ -79,7 +78,7 @@
             width: 100%;
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border-color);
-            padding: 16px 0;
+            padding: 12px 0;
             z-index: 1000;
             transition: background 0.3s, border-color 0.3s;
             box-shadow: 0 2px 10px rgba(0,0,0,0.04);
@@ -93,19 +92,21 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 24px;
             font-weight: 800;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -0.5px;
         }
 
-        .logo i {
-            -webkit-text-fill-color: initial;
-            color: var(--accent);
-            margin-right: 6px;
+        .logo img {
+            height: 40px;
+            -webkit-text-fill-color: initial; /* para que la imagen no se vea afectada */
+            border-radius: 8px;
         }
 
         .nav-links {
@@ -139,10 +140,8 @@
         .nav-links .btn-nav:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
-            color: #fff !important;
         }
 
-        /* Toggle modo oscuro */
         .theme-toggle {
             background: var(--bg-primary);
             border: 1px solid var(--border-color);
@@ -154,18 +153,13 @@
             gap: 8px;
             font-size: 14px;
             color: var(--text-secondary);
-            transition: background 0.3s, border-color 0.3s;
-        }
-
-        .theme-toggle i {
-            font-size: 16px;
+            transition: background 0.3s;
         }
 
         .theme-toggle:hover {
             background: var(--border-color);
         }
 
-        /* Menú hamburguesa para móvil */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -273,10 +267,16 @@
             align-items: center;
         }
 
-        .hero-image img {
-            max-width: 100%;
-            border-radius: var(--radius);
+        .hero-logo {
+            max-width: 400px;
+            width: 100%;
+            border-radius: 50%;
             box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .hero-logo:hover {
+            transform: scale(1.03);
         }
 
         /* ---------- SECCIÓN CURSOS ---------- */
@@ -591,6 +591,9 @@
             .contact-wrapper {
                 grid-template-columns: 1fr;
             }
+            .hero-logo {
+                max-width: 250px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -622,6 +625,9 @@
             }
             .contact-form {
                 padding: 20px;
+            }
+            .hero-logo {
+                max-width: 180px;
             }
         }
 
@@ -657,6 +663,8 @@
         .delay-3 { animation-delay: 0.3s; }
         .delay-4 { animation-delay: 0.4s; }
         .delay-5 { animation-delay: 0.5s; }
+        .delay-6 { animation-delay: 0.6s; }
+        .delay-7 { animation-delay: 0.7s; }
     </style>
 </head>
 <body>
@@ -664,7 +672,8 @@
     <nav class="navbar" id="navbar">
         <div class="container">
             <div class="logo">
-                <i class="fas fa-brain"></i> LD SmartLab
+                <img src="1788746704922.png" alt="LD SmartLab Logo">
+                LD SmartLab
             </div>
             <button class="hamburger" id="hamburger" aria-label="Menú">
                 <span></span><span></span><span></span>
@@ -686,15 +695,15 @@
     <section class="hero" id="inicio">
         <div class="container">
             <div class="hero-content fade-in">
-                <h1>Aprende <span>informática y ofimática</span> con cursos prácticos</h1>
-                <p>Domina Excel, Word, PowerPoint y fundamentos de informática desde cero hasta nivel intermedio. LD SmartLab te guía paso a paso.</p>
+                <h1>Aprende <span>informática, ofimática, IA e idiomas</span> con cursos prácticos</h1>
+                <p>Domina Excel, Word, PowerPoint, fundamentos de informática, inteligencia artificial y nuevos idiomas desde cero hasta nivel intermedio. LD SmartLab te guía paso a paso.</p>
                 <div class="hero-buttons">
                     <a href="#cursos" class="btn-primary"><i class="fas fa-play"></i> Ver cursos</a>
                     <a href="#about" class="btn-secondary"><i class="fas fa-info-circle"></i> Conócenos</a>
                 </div>
             </div>
             <div class="hero-image fade-in delay-1">
-                <img src="https://via.placeholder.com/500x400/6366f1/ffffff?text=LD+SmartLab" alt="LD SmartLab">
+                <img src="1788746704922.png" alt="LD SmartLab" class="hero-logo">
             </div>
         </div>
     </section>
@@ -712,35 +721,49 @@
                     <div class="icon"><i class="fas fa-file-excel"></i></div>
                     <h3>Excel Básico</h3>
                     <p>Domina las hojas de cálculo desde cero: fórmulas, formato, gráficos y más.</p>
-                    <a href="CURSO BÁSICO EXCEL#1.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
+                    <a href="CURSO%20B%C3%81SICO%20EXCEL%231.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
                 </div>
                 <!-- Curso Intermedio Excel -->
                 <div class="course-card fade-in delay-2">
                     <div class="icon"><i class="fas fa-chart-line"></i></div>
                     <h3>Excel Intermedio</h3>
                     <p>Funciones lógicas, tablas dinámicas, búsquedas avanzadas y macros básicas.</p>
-                    <a href="CURSO EXCEL INTERMEDIO#1.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
+                    <a href="CURSO%20EXCEL%20INTERMEDIO%231.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
                 </div>
                 <!-- Word Básico-Intermedio -->
                 <div class="course-card fade-in delay-3">
                     <div class="icon"><i class="fas fa-file-word"></i></div>
                     <h3>Word Básico - Intermedio</h3>
                     <p>Desde la edición básica hasta tablas de contenido, combinación de correspondencia y macros.</p>
-                    <a href="CURSO BÁSICO-INTERMEDIO WORD#1.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
+                    <a href="CURSO%20B%C3%81SICO-INTERMEDIO%20WORD%231.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
                 </div>
                 <!-- PowerPoint Básico-Intermedio -->
                 <div class="course-card fade-in delay-4">
                     <div class="icon"><i class="fas fa-file-powerpoint"></i></div>
                     <h3>PowerPoint Básico - Intermedio</h3>
                     <p>Crea presentaciones impactantes con diapositivas maestras, animaciones y multimedia.</p>
-                    <a href="CURSO BÁSICO-INTERMEDIO POWERPOINT#1.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
+                    <a href="CURSO%20B%C3%81SICO-INTERMEDIO%20POWERPOINT%231.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
                 </div>
                 <!-- Informática Básica-Intermedio -->
                 <div class="course-card fade-in delay-5">
                     <div class="icon"><i class="fas fa-desktop"></i></div>
                     <h3>Informática Básica - Intermedia</h3>
                     <p>Hardware, software, redes, seguridad, virtualización y automatización con scripts.</p>
-                    <a href="CURSO BÁSICO-INTERMEDIO INFORMÁTICA#1.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
+                    <a href="CURSO%20B%C3%81SICO-INTERMEDIO%20INFORM%C3%81TICA%231.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
+                </div>
+                <!-- NUEVO: Inteligencia Artificial -->
+                <div class="course-card fade-in delay-6">
+                    <div class="icon"><i class="fas fa-robot"></i></div>
+                    <h3>Inteligencia Artificial</h3>
+                    <p>Domina las principales herramientas de IA: DeepSeek, ChatGPT, Gemini, Copilot, y más para investigación, negocios y marketing.</p>
+                    <a href="CURSO%20IA.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
+                </div>
+                <!-- NUEVO: Idiomas -->
+                <div class="course-card fade-in delay-7">
+                    <div class="icon"><i class="fas fa-language"></i></div>
+                    <h3>Idiomas (Inglés, Francés, Alemán)</h3>
+                    <p>Aprende idiomas desde cero con ejercicios interactivos, vocabulario, gramática y práctica de conversación.</p>
+                    <a href="CURSO%20IDIOMAS.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
                 </div>
             </div>
         </div>
@@ -751,23 +774,23 @@
         <div class="container">
             <div class="section-header fade-in">
                 <h2>Misión, Visión y Objetivo</h2>
-                <p>En LD SmartLab nos apasiona la educación tecnológica accesible para todos.</p>
+                <p>En LD SmartLab nos apasiona la educación tecnológica y lingüística accesible para todos.</p>
             </div>
             <div class="about-grid">
                 <div class="about-item fade-in delay-1">
                     <i class="fas fa-bullseye"></i>
                     <h3>Misión</h3>
-                    <p>Empoderar a las personas con habilidades digitales prácticas mediante cursos claros, estructurados y aplicables al mundo real.</p>
+                    <p>Empoderar a las personas con habilidades digitales y lingüísticas prácticas mediante cursos claros, estructurados y aplicables al mundo real.</p>
                 </div>
                 <div class="about-item fade-in delay-2">
                     <i class="fas fa-eye"></i>
                     <h3>Visión</h3>
-                    <p>Convertirnos en el referente de formación ofimática e informática para hispanohablantes, con una comunidad activa y en constante aprendizaje.</p>
+                    <p>Convertirnos en el referente de formación ofimática, informática, IA e idiomas para hispanohablantes, con una comunidad activa y en constante aprendizaje.</p>
                 </div>
                 <div class="about-item fade-in delay-3">
                     <i class="fas fa-flag-checkered"></i>
                     <h3>Objetivo</h3>
-                    <p>Ofrecer cursos de calidad que permitan a cualquier persona, sin importar su nivel, dominar las herramientas tecnológicas más demandadas.</p>
+                    <p>Ofrecer cursos de calidad que permitan a cualquier persona, sin importar su nivel, dominar las herramientas tecnológicas y lingüísticas más demandadas.</p>
                 </div>
             </div>
         </div>
@@ -795,9 +818,9 @@
                 </div>
                 <div class="testimonial-card fade-in delay-3">
                     <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p>"Los cursos de informática me dieron confianza para manejar mi computadora, redes y hasta hacer scripts básicos. Muy recomendable para principiantes."</p>
+                    <p>"El curso de IA me abrió la mente. Ahora uso ChatGPT y Perplexity para mis investigaciones. Muy recomendable para estudiantes y profesionales."</p>
                     <div class="author">Laura Fernández</div>
-                    <div class="role">Emprendedora</div>
+                    <div class="role">Investigadora</div>
                 </div>
             </div>
         </div>
@@ -845,7 +868,7 @@
     <!-- ========== FOOTER ========== -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 <strong>LD SmartLab</strong> — Cursos de informática y ofimática.</p>
+            <p>&copy; 2026 <strong>LD SmartLab</strong> — Cursos de informática, ofimática, IA e idiomas.</p>
             <p style="margin-top: 6px;">
                 <a href="mailto:luisdanielramoscorona@outlook.com">luisdanielramoscorona@outlook.com</a> · 
                 <a href="#inicio">Inicio</a> · 
@@ -862,7 +885,6 @@
         const themeLabel = document.getElementById('themeLabel');
         const html = document.documentElement;
 
-        // Cargar preferencia guardada
         if (localStorage.getItem('theme') === 'dark') {
             html.setAttribute('data-theme', 'dark');
             themeLabel.textContent = 'Claro';
@@ -892,14 +914,13 @@
             navLinks.classList.toggle('open');
         });
 
-        // Cerrar menú al hacer clic en un enlace (móvil)
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('open');
             });
         });
 
-        // ---------- ANIMACIONES AL SCROLL (IntersectionObserver) ----------
+        // ---------- ANIMACIONES AL SCROLL ----------
         const fadeElements = document.querySelectorAll('.fade-in');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -916,7 +937,6 @@
             observer.observe(el);
         });
 
-        // Asegurar que los elementos visibles al cargar se muestren
         window.addEventListener('load', () => {
             fadeElements.forEach(el => {
                 const rect = el.getBoundingClientRect();
