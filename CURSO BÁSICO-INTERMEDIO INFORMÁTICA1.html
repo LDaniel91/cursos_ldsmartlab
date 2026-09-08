@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos de Informática - Básico e Intermedio</title>
+    <style>
+        /* ---------- RESET Y BASE ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .presentation-container {
+            max-width: 1200px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px 30px 30px;
+            transition: all 0.3s;
+        }
+
+        /* ---------- SELECTOR DE CURSO ---------- */
+        .course-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e9edf4;
+            padding-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .course-selector button {
+            background: #ecf0f3;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .course-selector button:hover {
+            background: #d5dde6;
+        }
+        .course-selector button.active-basico {
+            background: #1abc9c;
+            color: white;
+        }
+        .course-selector button.active-intermedio {
+            background: #e74c3c;
+            color: white;
+        }
+
+        /* ---------- HEADER ---------- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e9edf4;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .header .badge {
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .badge-basico {
+            background: #1abc9c;
+        }
+        .badge-intermedio {
+            background: #e74c3c;
+        }
+        .header .slide-counter {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        /* ---------- CONTENIDO ---------- */
+        .slide-content {
+            min-height: 420px;
+            padding: 10px 5px 20px;
+        }
+        .slide-content h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 6px solid #1abc9c;
+        }
+        .slide-content h2.intermedio {
+            border-left-color: #e74c3c;
+        }
+        .slide-content .step-list {
+            list-style: none;
+            padding: 0;
+        }
+        .slide-content .step-list li {
+            background: #f8faff;
+            margin-bottom: 16px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #1abc9c;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.6;
+            color: #1e2a3a;
+        }
+        .slide-content .step-list li.intermedio {
+            border-left-color: #e74c3c;
+        }
+        .slide-content .step-list li .icon {
+            font-size: 28px;
+            min-width: 40px;
+            text-align: center;
+        }
+        .slide-content .step-list li .text {
+            flex: 1;
+        }
+        .slide-content .step-list li .text strong {
+            color: #2c3e50;
+        }
+        .slide-content .example-box {
+            background: #f0f7ff;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin: 15px 0 10px;
+            border: 1px dashed #b3d4fc;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+        }
+        .slide-content .example-box.intermedio {
+            background: #fde8e8;
+            border-color: #f5b7b1;
+        }
+        .slide-content .tip {
+            background: #fff9e6;
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin: 12px 0;
+            border-left: 5px solid #f1c40f;
+            font-size: 15px;
+        }
+        .slide-content .visual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .slide-content .visual-grid .item {
+            background: #ecf0f3;
+            border-radius: 8px;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* ---------- NAVEGACIÓN ---------- */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e9edf4;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .nav-buttons button {
+            background: #ecf0f3;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 15px;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-buttons button:hover {
+            background: #d5dde6;
+        }
+        .nav-buttons button.primary-basico {
+            background: #1abc9c;
+            color: white;
+        }
+        .nav-buttons button.primary-basico:hover {
+            background: #16a085;
+        }
+        .nav-buttons button.primary-intermedio {
+            background: #e74c3c;
+            color: white;
+        }
+        .nav-buttons button.primary-intermedio:hover {
+            background: #c0392b;
+        }
+        .index-btn {
+            background: #bdc3c7;
+            color: #2c3e50;
+        }
+        .index-btn:hover {
+            background: #a0a8af;
+        }
+
+        /* ---------- MODAL ÍNDICE ---------- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: white;
+            border-radius: 24px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-box h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #e9edf4;
+            padding-bottom: 12px;
+        }
+        .modal-box .index-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f3f8;
+            cursor: pointer;
+            transition: 0.1s;
+            color: #2c3e50;
+        }
+        .modal-box .index-item:hover {
+            background: #f7faff;
+            padding-left: 8px;
+        }
+        .modal-box .index-item .idx-badge {
+            background: #1abc9c;
+            color: white;
+            border-radius: 30px;
+            padding: 2px 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .modal-box .index-item .idx-badge.intermedio {
+            background: #e74c3c;
+        }
+        .close-modal {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .close-modal:hover {
+            background: #c0392b;
+        }
+
+        @media (max-width: 768px) {
+            .presentation-container { padding: 15px; }
+            .header h1 { font-size: 20px; }
+            .slide-content h2 { font-size: 22px; }
+            .nav-buttons button { padding: 8px 14px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container" id="app">
+        <!-- Selector de curso -->
+        <div class="course-selector">
+            <button id="btnBasico" class="active-basico">🖥️ Informática Básica</button>
+            <button id="btnIntermedio">🖧 Informática Intermedia</button>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1 id="mainTitle">🖥️ Informática Básica - Día 1</h1>
+            <div>
+                <span class="badge badge-basico" id="badgeLevel">Básico</span>
+                <span class="slide-counter" id="slideCounter">1 / 21</span>
+            </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="slide-content" id="slideContent">
+            <!-- Renderizado por JS -->
+        </div>
+
+        <!-- Navegación -->
+        <div class="navigation">
+            <div class="nav-buttons">
+                <button id="prevBtn">◀ Anterior</button>
+                <button id="nextBtn" class="primary-basico">Siguiente ▶</button>
+            </div>
+            <div class="nav-buttons">
+                <button id="indexBtn" class="index-btn">📋 Índice</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal índice -->
+    <div class="modal-overlay" id="indexModal">
+        <div class="modal-box">
+            <h3 id="modalTitle">📋 Índice - Informática Básica</h3>
+            <div id="indexList"></div>
+            <button class="close-modal" id="closeModalBtn">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        // DEFINICIÓN DE CURSOS DE INFORMÁTICA
+        // ================================================================
+
+        // ---------- CURSO INFORMÁTICA BÁSICA (21 diapositivas, 3 días) ----------
+        const cursoBasico = [];
+
+        // Día 1: Conceptos básicos, hardware, software, sistema operativo, escritorio, archivos y carpetas
+        cursoBasico.push({
+            title: '¿Qué es la informática?',
+            content: [
+                { icon: '💻', text: '<strong>Definición:</strong> La informática es la ciencia que estudia el tratamiento automático de la información mediante computadoras.' },
+                { icon: '📀', text: '<strong>Áreas:</strong> Hardware (partes físicas), software (programas), redes, bases de datos, seguridad, etc.' },
+                { icon: '🎯', text: '<strong>Objetivo del curso:</strong> Adquirir habilidades básicas para usar una computadora con confianza y eficiencia.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Hardware básico: CPU, monitor, teclado, ratón',
+            content: [
+                { icon: '🖥️', text: '<strong>CPU (unidad central de procesamiento):</strong> Es el cerebro de la computadora, procesa todas las instrucciones.' },
+                { icon: '🖥️', text: '<strong>Monitor:</strong> Muestra la información visualmente.' },
+                { icon: '⌨️', text: '<strong>Teclado:</strong> Dispositivo de entrada para escribir texto y comandos.' },
+                { icon: '🖱️', text: '<strong>Ratón:</strong> Permite señalar y seleccionar elementos en la pantalla.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Software: sistemas operativos y aplicaciones',
+            content: [
+                { icon: '🖧', text: '<strong>Sistema operativo (SO):</strong> Programa que gestiona el hardware y permite ejecutar otras aplicaciones. Ej: Windows, macOS, Linux.' },
+                { icon: '📱', text: '<strong>Aplicaciones:</strong> Programas que realizan tareas específicas: navegadores, procesadores de texto, hojas de cálculo, etc.' },
+                { icon: '💡', text: '<strong>Ejemplos:</strong> Word, Excel, Chrome, Photoshop, reproductores multimedia.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Encender y apagar la computadora correctamente',
+            content: [
+                { icon: '🔌', text: '<strong>Encender:</strong> Presionar el botón de encendido en la CPU o laptop. Esperar a que cargue el sistema operativo.' },
+                { icon: '🔄', text: '<strong>Reiniciar:</strong> Usar la opción "Reiniciar" en el menú de inicio para solucionar problemas.' },
+                { icon: '⏻', text: '<strong>Apagar:</strong> Siempre usar el menú de inicio > Apagar. No desconectar la corriente mientras está encendida.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'El escritorio y la barra de tareas (Windows)',
+            content: [
+                { icon: '🖥️', text: '<strong>Escritorio:</strong> Pantalla principal donde aparecen iconos de accesos directos y archivos.' },
+                { icon: '📌', text: '<strong>Barra de tareas:</strong> Generalmente en la parte inferior. Muestra el botón de inicio, aplicaciones abiertas y el reloj.' },
+                { icon: '📂', text: '<strong>Accesos directos:</strong> Iconos que abren programas o archivos al hacer doble clic.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Navegar por el explorador de archivos',
+            content: [
+                { icon: '📁', text: '<strong>Explorador de archivos:</strong> Herramienta para ver y organizar archivos y carpetas.' },
+                { icon: '🗂️', text: '<strong>Unidades:</strong> Disco local (C:), USB, discos externos.' },
+                { icon: '📂', text: '<strong>Carpetas:</strong> Contenedores para organizar archivos. Se pueden crear, renombrar y eliminar.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Crear, renombrar y eliminar carpetas',
+            content: [
+                { icon: '📁', text: '<strong>Crear carpeta:</strong> Clic derecho en el lugar deseado > Nuevo > Carpeta. Escribir el nombre.' },
+                { icon: '✏️', text: '<strong>Renombrar:</strong> Clic derecho sobre la carpeta > Cambiar nombre, o presionar F2.' },
+                { icon: '🗑️', text: '<strong>Eliminar:</strong> Clic derecho > Eliminar o arrastrar a la Papelera de reciclaje.' }
+            ]
+        });
+        // Día 2: Copiar, mover, pegar, búsqueda, accesorios, navegación web, correo electrónico
+        cursoBasico.push({
+            title: 'Copiar, mover y pegar archivos',
+            content: [
+                { icon: '📋', text: '<strong>Copiar (Ctrl+C):</strong> Duplica el archivo o carpeta en el portapapeles.' },
+                { icon: '✂️', text: '<strong>Cortar (Ctrl+X):</strong> Mueve el archivo al portapapeles (se elimina del origen).' },
+                { icon: '📋', text: '<strong>Pegar (Ctrl+V):</strong> Coloca el contenido del portapapeles en la ubicación actual.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Buscar archivos y carpetas',
+            content: [
+                { icon: '🔍', text: '<strong>Buscar:</strong> En el explorador, usa la barra de búsqueda (lupa) para encontrar archivos por nombre.' },
+                { icon: '📅', text: '<strong>Filtros:</strong> Puedes buscar por fecha, tipo de archivo (imagen, documento), tamaño.' },
+                { icon: '💡', text: '<strong>Consejo:</strong> Usa el comodín * para búsquedas parciales (ej. *informe*.docx).' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Accesorios de Windows: Bloc de notas, Calculadora, Paint',
+            content: [
+                { icon: '📝', text: '<strong>Bloc de notas:</strong> Editor de texto simple para tomar notas rápidas.' },
+                { icon: '🧮', text: '<strong>Calculadora:</strong> Realiza operaciones básicas y científicas.' },
+                { icon: '🎨', text: '<strong>Paint:</strong> Editor de dibujo simple para crear y editar imágenes.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Navegadores web: Edge, Chrome, Firefox',
+            content: [
+                { icon: '🌐', text: '<strong>Navegadores:</strong> Programas para acceder a páginas web. Los más comunes: Microsoft Edge, Google Chrome, Mozilla Firefox.' },
+                { icon: '🔗', text: '<strong>Barra de direcciones:</strong> Escribe la URL (ej. www.google.com) y presiona Enter.' },
+                { icon: '📑', text: '<strong>Pestañas:</strong> Abrir varias páginas en la misma ventana (Ctrl+T nueva pestaña).' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Uso básico de un motor de búsqueda (Google)',
+            content: [
+                { icon: '🔎', text: '<strong>Buscar:</strong> Escribe palabras clave en la barra de búsqueda y presiona Enter.' },
+                { icon: '📋', text: '<strong>Resultados:</strong> Haz clic en los enlaces para visitar las páginas.' },
+                { icon: '💡', text: '<strong>Consejos:</strong> Usa comillas para búsquedas exactas ("receta de paella"). Usa - para excluir palabras.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Correo electrónico: crear cuenta, enviar y recibir',
+            content: [
+                { icon: '✉️', text: '<strong>Crear cuenta:</strong> Ve a Gmail, Outlook u otro proveedor y sigue los pasos para registrarte.' },
+                { icon: '📨', text: '<strong>Enviar correo:</strong> Haz clic en "Redactar" o "Nuevo", escribe el destinatario, asunto y mensaje.' },
+                { icon: '📬', text: '<strong>Recibir:</strong> Revisa la bandeja de entrada. Haz clic en los correos para leerlos.' }
+            ]
+        });
+        // Día 3: Redes sociales, almacenamiento en la nube, seguridad básica, impresión, resumen
+        cursoBasico.push({
+            title: 'Redes sociales básicas (Facebook, Instagram, WhatsApp)',
+            content: [
+                { icon: '📱', text: '<strong>Facebook:</strong> Red social para conectar con amigos, compartir publicaciones, fotos y eventos.' },
+                { icon: '📸', text: '<strong>Instagram:</strong> Enfocado en compartir fotos y videos cortos, con historias y mensajes directos.' },
+                { icon: '💬', text: '<strong>WhatsApp:</strong> Aplicación de mensajería instantánea para enviar mensajes, llamadas y videollamadas.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Almacenamiento en la nube: OneDrive, Google Drive, Dropbox',
+            content: [
+                { icon: '☁️', text: '<strong>Nube:</strong> Servicio que permite guardar archivos en internet y acceder desde cualquier dispositivo.' },
+                { icon: '📂', text: '<strong>Google Drive:</strong> Ofrece 15 GB gratis, integración con Gmail y documentos.' },
+                { icon: '💾', text: '<strong>OneDrive:</strong> Integrado con Windows y Office, ofrece 5 GB gratis.' },
+                { icon: '📁', text: '<strong>Dropbox:</strong> Popular por su simplicidad, ofrece 2 GB gratis.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Seguridad básica: contraseñas, antivirus, phishing',
+            content: [
+                { icon: '🔒', text: '<strong>Contraseñas seguras:</strong> Usa al menos 8 caracteres con mayúsculas, minúsculas, números y símbolos. No uses la misma para todo.' },
+                { icon: '🛡️', text: '<strong>Antivirus:</strong> Programa que protege contra virus y malware. Windows trae Microsoft Defender.' },
+                { icon: '🎣', text: '<strong>Phishing:</strong> Correos o mensajes falsos que intentan robar información. No hagas clic en enlaces sospechosos.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Conectar dispositivos: USB, impresora, auriculares',
+            content: [
+                { icon: '🔌', text: '<strong>USB:</strong> Conecta la memoria USB a un puerto. Aparecerá como unidad en el explorador.' },
+                { icon: '🖨️', text: '<strong>Impresora:</strong> Conecta vía USB o Wi-Fi. Instala los controladores si es necesario.' },
+                { icon: '🎧', text: '<strong>Auriculares:</strong> Conéctalos al puerto de audio o vía Bluetooth.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Imprimir documentos (paso a paso)',
+            content: [
+                { icon: '🖨️', text: '<strong>Paso 1:</strong> Abre el documento o imagen que quieres imprimir.' },
+                { icon: '📋', text: '<strong>Paso 2:</strong> Ve a Archivo > Imprimir o presiona Ctrl+P.' },
+                { icon: '📄', text: '<strong>Paso 3:</strong> Selecciona la impresora, número de copias, páginas a imprimir.' },
+                { icon: '▶️', text: '<strong>Paso 4:</strong> Haz clic en Imprimir.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Resolución de problemas comunes',
+            content: [
+                { icon: '🔄', text: '<strong>Computadora lenta:</strong> Cierra programas no usados, reinicia, verifica espacio en disco.' },
+                { icon: '🚫', text: '<strong>No responde:</strong> Presiona Ctrl+Alt+Supr y abre el Administrador de tareas para finalizar aplicaciones.' },
+                { icon: '🔌', text: '<strong>Sin internet:</strong> Verifica el cable o Wi-Fi, reinicia el módem.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Atajos de teclado esenciales',
+            content: [
+                { icon: '⌨️', text: '<strong>Ctrl+C:</strong> Copiar.' },
+                { icon: '⌨️', text: '<strong>Ctrl+V:</strong> Pegar.' },
+                { icon: '⌨️', text: '<strong>Ctrl+X:</strong> Cortar.' },
+                { icon: '⌨️', text: '<strong>Ctrl+Z:</strong> Deshacer.' },
+                { icon: '⌨️', text: '<strong>Alt+Tab:</strong> Cambiar entre ventanas abiertas.' },
+                { icon: '⌨️', text: '<strong>Ctrl+S:</strong> Guardar.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Resumen y consejos (Básico)',
+            content: [
+                { icon: '🌟', text: '<strong>Has aprendido:</strong> Conceptos de hardware/software, uso del sistema operativo, archivos y carpetas, navegación web, correo electrónico, redes sociales, nube, seguridad básica, impresión y resolución de problemas.' },
+                { icon: '🚀', text: '<strong>Siguiente nivel:</strong> Informática Intermedia profundiza en redes, ofimática avanzada, mantenimiento, virtualización y más.' },
+                { icon: '💪', text: '<strong>Práctica:</strong> Crea una estructura de carpetas para tus documentos, envía un correo con un archivo adjunto y busca información en Google usando filtros.' }
+            ]
+        });
+
+        // ---------- CURSO INFORMÁTICA INTERMEDIA (21 diapositivas, 3 días) ----------
+        const cursoIntermedio = [];
+
+        // Día 1: Redes, conectividad, periféricos avanzados, virtualización, nube avanzada
+        cursoIntermedio.push({
+            title: 'Redes informáticas: LAN, WAN, Internet',
+            content: [
+                { icon: '🌐', text: '<strong>Red LAN:</strong> Red local que conecta dispositivos en un área pequeña (oficina, casa).' },
+                { icon: '🌍', text: '<strong>WAN:</strong> Red de área amplia, como Internet, que conecta redes de todo el mundo.' },
+                { icon: '📶', text: '<strong>Wi-Fi:</strong> Tecnología inalámbrica para conectar dispositivos a la red sin cables.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Configurar una red doméstica (router, DHCP, IP)',
+            content: [
+                { icon: '📶', text: '<strong>Router:</strong> Dispositivo que distribuye la señal de internet a los dispositivos.' },
+                { icon: '🔢', text: '<strong>IP:</strong> Dirección única que identifica cada dispositivo en la red.' },
+                { icon: '⚙️', text: '<strong>DHCP:</strong> Protocolo que asigna automáticamente direcciones IP a los dispositivos.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Periféricos avanzados: escáner, webcam, micrófono',
+            content: [
+                { icon: '🖨️', text: '<strong>Escáner:</strong> Digitaliza documentos e imágenes, convirtiéndolos en archivos.' },
+                { icon: '🎥', text: '<strong>Webcam:</strong> Cámara para videoconferencias, transmisiones y grabación.' },
+                { icon: '🎤', text: '<strong>Micrófono:</strong> Captura audio para llamadas, grabaciones o asistentes de voz.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Virtualización: máquinas virtuales (VM)',
+            content: [
+                { icon: '🖥️', text: '<strong>Máquina virtual:</strong> Simulación de una computadora dentro de otra, permite probar sistemas operativos sin afectar el principal.' },
+                { icon: '🔄', text: '<strong>Software:</strong> VirtualBox, VMware Workstation, Hyper-V (Windows).' },
+                { icon: '💡', text: '<strong>Usos:</strong> Pruebas de software, entornos de desarrollo, ejecutar sistemas antiguos.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Almacenamiento en la nube avanzado (sincronización, copias de seguridad)',
+            content: [
+                { icon: '☁️', text: '<strong>Sincronización:</strong> Mantener los mismos archivos actualizados en múltiples dispositivos.' },
+                { icon: '🔄', text: '<strong>Copia de seguridad automática:</strong> Programar respaldos periódicos en la nube.' },
+                { icon: '🔒', text: '<strong>Cifrado:</strong> Proteger archivos con contraseña antes de subirlos a la nube.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Ofimática avanzada: integración de documentos (Word, Excel, PowerPoint)',
+            content: [
+                { icon: '📊', text: '<strong>Vincular datos:</strong> Insertar hojas de Excel en Word o PowerPoint y mantener la actualización.' },
+                { icon: '🔗', text: '<strong>Objetos incrustados:</strong> Insertar un documento de Word dentro de otro, o una presentación dentro de un informe.' },
+                { icon: '📋', text: '<strong>Combinar correspondencia:</strong> Usar datos de Excel para generar cartas personalizadas en Word.' }
+            ]
+        });
+        // Día 2: Mantenimiento, seguridad avanzada, copias de seguridad, resolución de problemas, control parental, accesibilidad
+        cursoIntermedio.push({
+            title: 'Mantenimiento preventivo: limpieza de archivos, desfragmentación',
+            content: [
+                { icon: '🧹', text: '<strong>Liberador de espacio:</strong> Herramienta de Windows para eliminar archivos temporales y vaciar la papelera.' },
+                { icon: '🔄', text: '<strong>Desfragmentación:</strong> Optimiza la ubicación de archivos en el disco duro para mejorar el rendimiento (no necesario en SSD).' },
+                { icon: '📊', text: '<strong>Monitor de recursos:</strong> Ver el uso de CPU, memoria y disco para identificar cuellos de botella.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Seguridad avanzada: firewall, VPN, autenticación de dos factores',
+            content: [
+                { icon: '🔥', text: '<strong>Firewall:</strong> Barrera que bloquea accesos no autorizados a la red o computadora.' },
+                { icon: '🔒', text: '<strong>VPN:</strong> Red privada virtual que cifra la conexión y oculta la IP.' },
+                { icon: '🔑', text: '<strong>Autenticación 2FA:</strong> Requiere un segundo factor (código SMS, app) además de la contraseña.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Copias de seguridad (backup) locales y en la nube',
+            content: [
+                { icon: '💾', text: '<strong>Backup local:</strong> Guardar copias en discos externos o unidades USB.' },
+                { icon: '☁️', text: '<strong>Backup en la nube:</strong> Usar servicios como Backblaze, Carbonite o iDrive.' },
+                { icon: '📅', text: '<strong>Programación:</strong> Configurar copias automáticas diarias o semanales.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Resolución de problemas avanzada: administrador de tareas, visor de eventos',
+            content: [
+                { icon: '🔧', text: '<strong>Administrador de tareas:</strong> Ctrl+Alt+Supr > Administrador de tareas. Permite finalizar procesos, ver rendimiento.' },
+                { icon: '📋', text: '<strong>Visor de eventos:</strong> Muestra registros de errores y advertencias del sistema.' },
+                { icon: '💡', text: '<strong>Consejo:</strong> Busca el código de error en internet para encontrar soluciones.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Control parental y gestión de cuentas de usuario',
+            content: [
+                { icon: '👨‍👩‍👦', text: '<strong>Control parental:</strong> Limitar el tiempo de uso, bloquear contenido inapropiado y restringir compras.' },
+                { icon: '👤', text: '<strong>Cuentas de usuario:</strong> Crear cuentas separadas para cada persona, con permisos específicos (administrador, estándar).' },
+                { icon: '🔒', text: '<strong>Privacidad:</strong> Configurar qué información comparten las aplicaciones.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Accesibilidad: herramientas para personas con discapacidad',
+            content: [
+                { icon: '👁️', text: '<strong>Narrador:</strong> Lee en voz alta el texto de la pantalla (Windows).' },
+                { icon: '🔍', text: '<strong>Lupa:</strong> Amplía partes de la pantalla.' },
+                { icon: '⌨️', text: '<strong>Teclado en pantalla:</strong> Permite escribir usando el ratón.' }
+            ]
+        });
+        // Día 3: Programación básica, automatización, scripting, bases de datos, administración de sistemas, resumen
+        cursoIntermedio.push({
+            title: 'Introducción a la programación: algoritmos y lógica básica',
+            content: [
+                { icon: '🧩', text: '<strong>Algoritmo:</strong> Secuencia de pasos para resolver un problema. Ej: receta de cocina.' },
+                { icon: '🔤', text: '<strong>Lenguajes:</strong> Python, JavaScript, C#, etc. Se usan para escribir programas.' },
+                { icon: '📝', text: '<strong>Estructuras:</strong> Condicionales (SI), bucles (PARA, MIENTRAS) y variables.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Automatización con scripts simples (Batch, PowerShell)',
+            content: [
+                { icon: '📜', text: '<strong>Batch (.bat):</strong> Scripts para Windows que ejecutan comandos en secuencia.' },
+                { icon: '🔧', text: '<strong>PowerShell:</strong> Shell avanzado con capacidades de automatización y administración.' },
+                { icon: '📁', text: '<strong>Ejemplo:</strong> Crear un script que copie archivos de una carpeta a otra automáticamente.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Bases de datos: conceptos básicos (tablas, registros, SQL)',
+            content: [
+                { icon: '📊', text: '<strong>Base de datos:</strong> Conjunto de datos organizados para su fácil acceso y gestión.' },
+                { icon: '📋', text: '<strong>Tablas:</strong> Estructura con filas (registros) y columnas (campos).' },
+                { icon: '🔍', text: '<strong>SQL:</strong> Lenguaje de consulta para recuperar y manipular datos (SELECT, INSERT, UPDATE).' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Administración básica de sistemas: usuarios, permisos, servicios',
+            content: [
+                { icon: '👤', text: '<strong>Usuarios:</strong> Crear y administrar cuentas de usuario, asignar contraseñas.' },
+                { icon: '🔒', text: '<strong>Permisos:</strong> Controlar qué archivos y carpetas puede acceder cada usuario.' },
+                { icon: '⚙️', text: '<strong>Servicios:</strong> Programas que se ejecutan en segundo plano (impresión, actualizaciones).' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Internet de las cosas (IoT) y dispositivos inteligentes',
+            content: [
+                { icon: '📱', text: '<strong>IoT:</strong> Dispositivos conectados a internet que recopilan y comparten datos (termostatos, cámaras, electrodomésticos).' },
+                { icon: '🏠', text: '<strong>Domótica:</strong> Automatización del hogar mediante asistentes como Alexa o Google Home.' },
+                { icon: '🔐', text: '<strong>Seguridad:</strong> Cambiar contraseñas por defecto de los dispositivos IoT.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Ética y legislación en informática (protección de datos, derechos de autor)',
+            content: [
+                { icon: '⚖️', text: '<strong>Protección de datos:</strong> Leyes como GDPR o LOPD regulan el tratamiento de datos personales.' },
+                { icon: '📄', text: '<strong>Derechos de autor:</strong> Respetar la propiedad intelectual de software, música, imágenes.' },
+                { icon: '🔒', text: '<strong>Privacidad:</strong> No compartir información sensible sin consentimiento.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Atajos avanzados y productividad',
+            content: [
+                { icon: '⌨️', text: '<strong>Win+D:</strong> Mostrar escritorio.' },
+                { icon: '⌨️', text: '<strong>Win+E:</strong> Abrir explorador de archivos.' },
+                { icon: '⌨️', text: '<strong>Win+L:</strong> Bloquear la computadora.' },
+                { icon: '⌨️', text: '<strong>Win+I:</strong> Abrir configuración.' },
+                { icon: '⌨️', text: '<strong>Ctrl+Shift+Esc:</strong> Abrir administrador de tareas.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Resumen y siguientes pasos (Intermedio)',
+            content: [
+                { icon: '🌟', text: '<strong>Has aprendido:</strong> Redes, virtualización, ofimática avanzada, mantenimiento, seguridad avanzada, copias de seguridad, accesibilidad, programación básica, automatización, bases de datos, administración de sistemas, IoT y ética.' },
+                { icon: '🚀', text: '<strong>Siguiente nivel:</strong> Profundizar en programación (Python, JavaScript), administración de servidores, ciberseguridad, análisis de datos.' },
+                { icon: '💪', text: '<strong>Proyecto final:</strong> Configura una red doméstica con DHCP, crea un script de copia de seguridad automática y diseña un pequeño informe sobre ciberseguridad.' }
+            ]
+        });
+
+        // ================================================================
+        // LÓGICA DE LA APLICACIÓN
+        // ================================================================
+
+        let currentCourse = 'basico';
+        let currentIndex = 0;
+
+        function getSlides() {
+            return currentCourse === 'basico' ? cursoBasico : cursoIntermedio;
+        }
+
+        function getTotalSlides() {
+            return getSlides().length;
+        }
+
+        const mainTitle = document.getElementById('mainTitle');
+        const badgeLevel = document.getElementById('badgeLevel');
+        const slideCounter = document.getElementById('slideCounter');
+        const slideContent = document.getElementById('slideContent');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indexBtn = document.getElementById('indexBtn');
+        const modal = document.getElementById('indexModal');
+        const indexList = document.getElementById('indexList');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modalTitle = document.getElementById('modalTitle');
+        const btnBasico = document.getElementById('btnBasico');
+        const btnIntermedio = document.getElementById('btnIntermedio');
+
+        function renderSlide(index) {
+            const slides = getSlides();
+            const slide = slides[index];
+            if (!slide) return;
+
+            const isIntermedio = currentCourse === 'intermedio';
+            const nivelText = isIntermedio ? 'Intermedio' : 'Básico';
+            const icono = isIntermedio ? '🖧' : '🖥️';
+            mainTitle.textContent = `${icono} Informática ${nivelText} - Día ${Math.floor(index/7)+1}`;
+            badgeLevel.textContent = nivelText;
+            badgeLevel.className = `badge ${isIntermedio ? 'badge-intermedio' : 'badge-basico'}`;
+            slideCounter.textContent = `${index+1} / ${getTotalSlides()}`;
+
+            let html = `<h2 class="${isIntermedio ? 'intermedio' : ''}">${slide.title}</h2>`;
+            html += `<ul class="step-list">`;
+            slide.content.forEach(item => {
+                const liClass = isIntermedio ? 'intermedio' : '';
+                html += `<li class="${liClass}">`;
+                html += `<span class="icon">${item.icon || '📌'}</span>`;
+                html += `<span class="text">${item.text}</span>`;
+                html += `</li>`;
+            });
+            html += `</ul>`;
+
+            // Elementos visuales adicionales
+            if (slide.title.includes('Correo electrónico')) {
+                html += `<div class="visual-grid">
+                            <div class="item">✉️ Redactar</div>
+                            <div class="item">➡️</div>
+                            <div class="item">📨 Enviar</div>
+                            <div class="item">➡️</div>
+                            <div class="item">📬 Recibir</div>
+                        </div>`;
+            }
+            if (slide.title.includes('Máquinas virtuales')) {
+                html += `<div class="tip">💡 <strong>Tip:</strong> VirtualBox es gratuito y fácil de usar para empezar con máquinas virtuales.</div>`;
+            }
+            if (slide.title.includes('Mantenimiento')) {
+                html += `<div class="example-box ${isIntermedio ? 'intermedio' : ''}">🧹 <strong>Comando:</strong> cleanmgr (Liberador de espacio) en Ejecutar (Win+R).</div>`;
+            }
+
+            slideContent.innerHTML = html;
+
+            prevBtn.disabled = (index === 0);
+            const isLast = (index === getTotalSlides() - 1);
+            nextBtn.textContent = isLast ? '🏁 Finalizar' : 'Siguiente ▶';
+            nextBtn.className = `primary-${isIntermedio ? 'intermedio' : 'basico'}`;
+        }
+
+        function goTo(index) {
+            const total = getTotalSlides();
+            if (index < 0) index = 0;
+            if (index >= total) index = total - 1;
+            currentIndex = index;
+            renderSlide(currentIndex);
+        }
+
+        function changeCourse(course) {
+            if (course === currentCourse) return;
+            currentCourse = course;
+            currentIndex = 0;
+            btnBasico.className = course === 'basico' ? 'active-basico' : '';
+            btnIntermedio.className = course === 'intermedio' ? 'active-intermedio' : '';
+            renderSlide(0);
+            const nivel = course === 'intermedio' ? 'Intermedio' : 'Básico';
+            modalTitle.textContent = `📋 Índice - Informática ${nivel}`;
+        }
+
+        prevBtn.addEventListener('click', () => goTo(currentIndex - 1));
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex === getTotalSlides() - 1) {
+                alert(`🎉 ¡Has completado el curso de Informática ${currentCourse === 'intermedio' ? 'Intermedio' : 'Básico'}! Revisa el índice para repasar.`);
+                return;
+            }
+            goTo(currentIndex + 1);
+        });
+
+        btnBasico.addEventListener('click', () => changeCourse('basico'));
+        btnIntermedio.addEventListener('click', () => changeCourse('intermedio'));
+
+        function openIndex() {
+            const slides = getSlides();
+            const isIntermedio = currentCourse === 'intermedio';
+            let html = '';
+            slides.forEach((slide, idx) => {
+                const day = Math.floor(idx/7) + 1;
+                html += `<div class="index-item" data-index="${idx}">
+                            <span>${isIntermedio ? '🖧' : '🖥️'} ${slide.title}</span>
+                            <span class="idx-badge ${isIntermedio ? 'intermedio' : ''}">Día ${day}</span>
+                        </div>`;
+            });
+            indexList.innerHTML = html;
+            document.querySelectorAll('.index-item').forEach(el => {
+                el.addEventListener('click', function() {
+                    const idx = parseInt(this.dataset.index);
+                    goTo(idx);
+                    modal.classList.remove('active');
+                });
+            });
+            modal.classList.add('active');
+        }
+
+        indexBtn.addEventListener('click', openIndex);
+        closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+
+        // Inicializar
+        changeCourse('basico');
+    </script>
+</body>
+</html>

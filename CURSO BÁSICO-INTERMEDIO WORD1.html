@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos Word - Básico e Intermedio</title>
+    <style>
+        /* ---------- RESET Y BASE ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .presentation-container {
+            max-width: 1200px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px 30px 30px;
+            transition: all 0.3s;
+        }
+
+        /* ---------- SELECTOR DE CURSO ---------- */
+        .course-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e9edf4;
+            padding-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .course-selector button {
+            background: #ecf0f3;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .course-selector button:hover {
+            background: #d5dde6;
+        }
+        .course-selector button.active-basico {
+            background: #2e86de;
+            color: white;
+        }
+        .course-selector button.active-intermedio {
+            background: #e67e22;
+            color: white;
+        }
+
+        /* ---------- HEADER ---------- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e9edf4;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .header .badge {
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .badge-basico {
+            background: #2e86de;
+        }
+        .badge-intermedio {
+            background: #e67e22;
+        }
+        .header .slide-counter {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        /* ---------- CONTENIDO ---------- */
+        .slide-content {
+            min-height: 420px;
+            padding: 10px 5px 20px;
+        }
+        .slide-content h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 6px solid #2e86de;
+        }
+        .slide-content h2.intermedio {
+            border-left-color: #e67e22;
+        }
+        .slide-content .step-list {
+            list-style: none;
+            padding: 0;
+        }
+        .slide-content .step-list li {
+            background: #f8faff;
+            margin-bottom: 16px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #2e86de;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.6;
+            color: #1e2a3a;
+        }
+        .slide-content .step-list li.intermedio {
+            border-left-color: #e67e22;
+        }
+        .slide-content .step-list li .icon {
+            font-size: 28px;
+            min-width: 40px;
+            text-align: center;
+        }
+        .slide-content .step-list li .text {
+            flex: 1;
+        }
+        .slide-content .step-list li .text strong {
+            color: #2c3e50;
+        }
+        .slide-content .example-box {
+            background: #f0f7ff;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin: 15px 0 10px;
+            border: 1px dashed #b3d4fc;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+        }
+        .slide-content .example-box.intermedio {
+            background: #fdf0e6;
+            border-color: #f5cba7;
+        }
+        .slide-content .tip {
+            background: #fff9e6;
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin: 12px 0;
+            border-left: 5px solid #f1c40f;
+            font-size: 15px;
+        }
+        .slide-content .visual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .slide-content .visual-grid .item {
+            background: #ecf0f3;
+            border-radius: 8px;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* ---------- NAVEGACIÓN ---------- */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e9edf4;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .nav-buttons button {
+            background: #ecf0f3;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 15px;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-buttons button:hover {
+            background: #d5dde6;
+        }
+        .nav-buttons button.primary-basico {
+            background: #2e86de;
+            color: white;
+        }
+        .nav-buttons button.primary-basico:hover {
+            background: #1a6fb5;
+        }
+        .nav-buttons button.primary-intermedio {
+            background: #e67e22;
+            color: white;
+        }
+        .nav-buttons button.primary-intermedio:hover {
+            background: #ca6f1e;
+        }
+        .index-btn {
+            background: #bdc3c7;
+            color: #2c3e50;
+        }
+        .index-btn:hover {
+            background: #a0a8af;
+        }
+
+        /* ---------- MODAL ÍNDICE ---------- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: white;
+            border-radius: 24px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-box h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #e9edf4;
+            padding-bottom: 12px;
+        }
+        .modal-box .index-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f3f8;
+            cursor: pointer;
+            transition: 0.1s;
+            color: #2c3e50;
+        }
+        .modal-box .index-item:hover {
+            background: #f7faff;
+            padding-left: 8px;
+        }
+        .modal-box .index-item .idx-badge {
+            background: #2e86de;
+            color: white;
+            border-radius: 30px;
+            padding: 2px 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .modal-box .index-item .idx-badge.intermedio {
+            background: #e67e22;
+        }
+        .close-modal {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .close-modal:hover {
+            background: #c0392b;
+        }
+
+        @media (max-width: 768px) {
+            .presentation-container { padding: 15px; }
+            .header h1 { font-size: 20px; }
+            .slide-content h2 { font-size: 22px; }
+            .nav-buttons button { padding: 8px 14px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container" id="app">
+        <!-- Selector de curso -->
+        <div class="course-selector">
+            <button id="btnBasico" class="active-basico">📘 Word Básico</button>
+            <button id="btnIntermedio">📙 Word Intermedio</button>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1 id="mainTitle">📘 Word Básico - Día 1</h1>
+            <div>
+                <span class="badge badge-basico" id="badgeLevel">Básico</span>
+                <span class="slide-counter" id="slideCounter">1 / 18</span>
+            </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="slide-content" id="slideContent">
+            <!-- Renderizado por JS -->
+        </div>
+
+        <!-- Navegación -->
+        <div class="navigation">
+            <div class="nav-buttons">
+                <button id="prevBtn">◀ Anterior</button>
+                <button id="nextBtn" class="primary-basico">Siguiente ▶</button>
+            </div>
+            <div class="nav-buttons">
+                <button id="indexBtn" class="index-btn">📋 Índice</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal índice -->
+    <div class="modal-overlay" id="indexModal">
+        <div class="modal-box">
+            <h3 id="modalTitle">📋 Índice - Word Básico</h3>
+            <div id="indexList"></div>
+            <button class="close-modal" id="closeModalBtn">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        // DEFINICIÓN DE CURSOS
+        // ================================================================
+
+        // ---------- CURSO WORD BÁSICO (18 diapositivas, 3 días) ----------
+        const cursoBasico = [];
+
+        // Día 1: Introducción, interfaz, crear/guardar, texto, formato, párrafos, listas
+        cursoBasico.push({
+            title: 'Introducción a Word',
+            content: [
+                { icon: '📝', text: '<strong>¿Qué es Word?</strong> Procesador de textos de Microsoft, usado para crear documentos, cartas, informes, currículums, etc.' },
+                { icon: '🎯', text: '<strong>Objetivo del curso:</strong> Aprender a crear y formatear documentos profesionales desde cero.' },
+                { icon: '📅', text: '<strong>Estructura:</strong> 3 días con teoría, ejemplos y ejercicios prácticos.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Interfaz de Word',
+            content: [
+                { icon: '🖥️', text: '<strong>Elementos principales:</strong> Barra de título, Cinta de opciones (pestañas: Inicio, Insertar, Diseño, etc.), Área de trabajo, Barra de estado.' },
+                { icon: '🔍', text: '<strong>Vistas:</strong> Diseño de impresión, Lectura, Diseño web, Esquema, Borrador.' },
+                { icon: '📐', text: '<strong>Regla y zoom:</strong> Mostrar/ocultar regla, ajustar zoom para ver mejor el documento.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Crear y guardar un documento',
+            content: [
+                { icon: '📄', text: '<strong>Nuevo:</strong> Archivo > Nuevo > Documento en blanco o usar una plantilla.' },
+                { icon: '💾', text: '<strong>Guardar:</strong> Ctrl+G o Archivo > Guardar como > elegir ubicación y nombre.' },
+                { icon: '📂', text: '<strong>Abrir:</strong> Archivo > Abrir o Ctrl+A para buscar un documento existente.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Editar y seleccionar texto',
+            content: [
+                { icon: '✏️', text: '<strong>Escribir:</strong> Colocar el cursor y teclear.' },
+                { icon: '🖱️', text: '<strong>Seleccionar:</strong> Arrastrar con ratón, doble clic para seleccionar palabra, triple clic para párrafo.' },
+                { icon: '⌨️', text: '<strong>Teclas:</strong> Ctrl+Inicio/Fin, Mayús+teclas de flecha para seleccionar.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Formato de fuente (tipo, tamaño, color)',
+            content: [
+                { icon: '🔤', text: '<strong>Fuente:</strong> Inicio > Fuente > elegir tipo (Arial, Times, etc.) y tamaño.' },
+                { icon: '🎨', text: '<strong>Color:</strong> Inicio > Color de fuente para cambiar el color del texto.' },
+                { icon: '💪', text: '<strong>Negrita, cursiva, subrayado:</strong> Usar los botones en Inicio o Ctrl+N, Ctrl+K, Ctrl+S.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Alineación y espaciado de párrafos',
+            content: [
+                { icon: '↔️', text: '<strong>Alineación:</strong> Inicio > Alinear a la izquierda, centrar, derecha o justificar.' },
+                { icon: '📏', text: '<strong>Interlineado:</strong> Inicio > Espaciado entre líneas y párrafos (1.0, 1.5, 2.0).' },
+                { icon: '📐', text: '<strong>Sangría:</strong> Usar la regla o Inicio > Aumentar/Disminuir sangría.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Listas con viñetas y numeración',
+            content: [
+                { icon: '📋', text: '<strong>Viñetas:</strong> Seleccionar texto > Inicio > Viñetas (punto, cuadrado, etc.).' },
+                { icon: '🔢', text: '<strong>Numeración:</strong> Inicio > Numeración (1, 2, 3 o a, b, c).' },
+                { icon: '📐', text: '<strong>Jerarquías:</strong> Usar Aumentar/Disminuir sangría para crear sublistas.' }
+            ]
+        });
+        // Día 2: Tablas, imágenes, formas, estilos, diseño de página
+        cursoBasico.push({
+            title: 'Insertar y editar tablas',
+            content: [
+                { icon: '📊', text: '<strong>Insertar tabla:</strong> Insertar > Tabla > elegir número de filas y columnas.' },
+                { icon: '✏️', text: '<strong>Editar:</strong> Agregar texto en celdas, seleccionar filas/columnas.' },
+                { icon: '🎨', text: '<strong>Diseño:</strong> Herramientas de tabla > Diseño para aplicar estilos, bordes y sombreado.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Insertar imágenes desde archivo y en línea',
+            content: [
+                { icon: '🖼️', text: '<strong>Desde archivo:</strong> Insertar > Imágenes > Este dispositivo... y seleccionar.' },
+                { icon: '🌐', text: '<strong>Imágenes en línea:</strong> Insertar > Imágenes > Imágenes de archivo (Bing, OneDrive).' },
+                { icon: '✂️', text: '<strong>Recortar y ajustar:</strong> Seleccionar imagen > Formato > Recortar, ajustar brillo/contraste.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Insertar formas y dibujos',
+            content: [
+                { icon: '🔷', text: '<strong>Formas:</strong> Insertar > Formas > elegir rectángulo, círculo, flecha, etc. y dibujar.' },
+                { icon: '🎨', text: '<strong>Formato de forma:</strong> Relleno, contorno, efectos (sombra, reflexión).' },
+                { icon: '📐', text: '<strong>Agrupar:</strong> Seleccionar varias formas > Formato > Agrupar para moverlas juntas.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Estilos predefinidos y títulos',
+            content: [
+                { icon: '🎨', text: '<strong>Estilos:</strong> Inicio > Estilos > elegir Título 1, Título 2, Normal, etc. Aplican formato consistente.' },
+                { icon: '📋', text: '<strong>Modificar estilo:</strong> Clic derecho en un estilo > Modificar > cambiar fuente, tamaño, color.' },
+                { icon: '📑', text: '<strong>Beneficio:</strong> Los estilos facilitan la creación de tablas de contenido automáticas.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Diseño de página: márgenes, orientación, tamaño',
+            content: [
+                { icon: '📄', text: '<strong>Márgenes:</strong> Diseño > Márgenes > elegir Normal, Estrecho, o personalizado.' },
+                { icon: '🔄', text: '<strong>Orientación:</strong> Vertical u Horizontal.' },
+                { icon: '📏', text: '<strong>Tamaño de papel:</strong> Carta, A4, oficio, etc.' }
+            ]
+        });
+        // Día 3: Revisión, ortografía, buscar/reemplazar, imprimir, plantillas, resumen
+        cursoBasico.push({
+            title: 'Revisión ortográfica y gramatical',
+            content: [
+                { icon: '✅', text: '<strong>Ortografía:</strong> Revisar > Ortografía y gramática. Se resaltan errores y sugiere correcciones.' },
+                { icon: '📝', text: '<strong>Diccionario personalizado:</strong> Agregar palabras al diccionario para que no las marque como error.' },
+                { icon: '🔧', text: '<strong>Configurar:</strong> Archivo > Opciones > Revisión para ajustar reglas gramaticales.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Buscar y reemplazar texto',
+            content: [
+                { icon: '🔍', text: '<strong>Buscar:</strong> Inicio > Buscar o Ctrl+B. Permite encontrar palabras o frases.' },
+                { icon: '🔄', text: '<strong>Reemplazar:</strong> Inicio > Reemplazar o Ctrl+L. Cambiar una palabra por otra en todo el documento.' },
+                { icon: '🎯', text: '<strong>Opciones:</strong> Coincidir mayúsculas/minúsculas, buscar solo palabras completas.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Vista previa e impresión',
+            content: [
+                { icon: '🖨️', text: '<strong>Vista previa:</strong> Archivo > Imprimir, se muestra una previsualización del documento.' },
+                { icon: '📋', text: '<strong>Configuración:</strong> Elegir impresora, número de copias, páginas a imprimir.' },
+                { icon: '📐', text: '<strong>Ajustes:</strong> Tamaño de papel, orientación, márgenes, y escalado (Ajustar a la página).' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Plantillas y temas',
+            content: [
+                { icon: '📄', text: '<strong>Plantillas:</strong> Archivo > Nuevo > buscar plantillas (currículum, carta, informes).' },
+                { icon: '🎨', text: '<strong>Temas:</strong> Diseño > Temas para cambiar colores, fuentes y efectos globalmente.' },
+                { icon: '💡', text: '<strong>Consejo:</strong> Guarda tus documentos como plantillas (.dotx) para reutilizar.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Atajos de teclado útiles',
+            content: [
+                { icon: '⌨️', text: '<strong>Ctrl+G:</strong> Guardar.' },
+                { icon: '⌨️', text: '<strong>Ctrl+Z:</strong> Deshacer.' },
+                { icon: '⌨️', text: '<strong>Ctrl+C / Ctrl+V:</strong> Copiar y pegar.' },
+                { icon: '⌨️', text: '<strong>Ctrl+N:</strong> Negrita.' },
+                { icon: '⌨️', text: '<strong>Ctrl+B:</strong> Buscar.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Resumen y consejos (Básico)',
+            content: [
+                { icon: '🌟', text: '<strong>Has aprendido:</strong> Crear documentos, formato de texto, párrafos, listas, tablas, imágenes, formas, estilos, diseño de página, revisión, buscar/reemplazar, imprimir y usar plantillas.' },
+                { icon: '🚀', text: '<strong>Siguiente nivel:</strong> Word Intermedio para dominar tablas de contenido, combinación de correspondencia, macros y más.' },
+                { icon: '💪', text: '<strong>Práctica:</strong> Redacta un informe de 3 páginas aplicando títulos, estilos, imágenes y tabla.' }
+            ]
+        });
+
+        // ---------- CURSO WORD INTERMEDIO (18 diapositivas, 3 días) ----------
+        const cursoIntermedio = [];
+
+        // Día 1: Estilos avanzados, esquemas, tabla de contenido, encabezados/pies
+        cursoIntermedio.push({
+            title: 'Estilos avanzados y jerarquía',
+            content: [
+                { icon: '🎨', text: '<strong>Estilos personalizados:</strong> Crear nuevos estilos desde Inicio > Estilos > Crear un estilo.' },
+                { icon: '📋', text: '<strong>Asignar atajos:</strong> Asignar teclas rápidas a estilos para agilizar el trabajo.' },
+                { icon: '📑', text: '<strong>Jerarquía:</strong> Usar Título 1, 2, 3 para estructurar el documento correctamente.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Esquema y vista de esquema',
+            content: [
+                { icon: '📊', text: '<strong>Vista Esquema:</strong> Ver > Esquema. Muestra los títulos y subtítulos jerárquicamente.' },
+                { icon: '🔄', text: '<strong>Promover/Demover:</strong> Usar flechas para cambiar el nivel de un título.' },
+                { icon: '📄', text: '<strong>Mostrar solo títulos:</strong> Permite reorganizar secciones fácilmente.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Tabla de contenido automática',
+            content: [
+                { icon: '📑', text: '<strong>Insertar tabla:</strong> Referencias > Tabla de contenido > elegir un formato.' },
+                { icon: '🔄', text: '<strong>Actualizar:</strong> Clic derecho en la tabla > Actualizar campo, cuando cambie el contenido.' },
+                { icon: '🎨', text: '<strong>Personalizar:</strong> Modificar estilos de tabla de contenido para cambiar apariencia.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Encabezados y pies de página',
+            content: [
+                { icon: '📌', text: '<strong>Insertar:</strong> Insertar > Encabezado o Pie de página > elegir diseño.' },
+                { icon: '📅', text: '<strong>Agregar campos:</strong> Número de página, fecha, título del documento, etc.' },
+                { icon: '🔗', text: '<strong>Vinculación:</strong> Desvincular el encabezado/pie de la sección anterior para tener diferentes en cada sección.' }
+            ]
+        });
+        // Día 2: Columnas, saltos, secciones, tablas avanzadas, gráficos, SmartArt
+        cursoIntermedio.push({
+            title: 'Columnas en un documento',
+            content: [
+                { icon: '📰', text: '<strong>Crear columnas:</strong> Diseño > Columnas > elegir número (2, 3, etc.).' },
+                { icon: '📏', text: '<strong>Ancho y espacio:</strong> Columnas > Más columnas para personalizar.' },
+                { icon: '↔️', text: '<strong>Saltos de columna:</strong> Insertar > Salto > Salto de columna para forzar el cambio.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Saltos de página y secciones',
+            content: [
+                { icon: '📄', text: '<strong>Salto de página:</strong> Insertar > Salto > Salto de página (Ctrl+Intro).' },
+                { icon: '📑', text: '<strong>Salto de sección:</strong> Insertar > Salto > Salto de sección (página siguiente, continua, etc.).' },
+                { icon: '🔗', text: '<strong>Ventaja:</strong> Permite cambiar encabezados, pies, orientación y márgenes por sección.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Tablas avanzadas: fórmulas y ordenar',
+            content: [
+                { icon: '📊', text: '<strong>Fórmulas en tablas:</strong> Seleccionar celda > Diseño (tabla) > Fórmula. Ej: =SUMA(IZQUIERDA)' },
+                { icon: '🔢', text: '<strong>Ordenar:</strong> Seleccionar tabla > Inicio > Ordenar > elegir columna y criterio (ascendente/descendente).' },
+                { icon: '📐', text: '<strong>Combinar celdas:</strong> Seleccionar varias celdas > Diseño > Combinar celdas.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Insertar gráficos (barras, líneas, circulares)',
+            content: [
+                { icon: '📈', text: '<strong>Insertar gráfico:</strong> Insertar > Gráfico > elegir tipo (columna, barra, línea, circular).' },
+                { icon: '📊', text: '<strong>Editar datos:</strong> Se abre una hoja de Excel para ingresar o pegar datos.' },
+                { icon: '🎨', text: '<strong>Diseño y formato:</strong> Herramientas de gráfico > Diseño para cambiar colores y estilos.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'SmartArt - diagramas de flujo y organigramas',
+            content: [
+                { icon: '🧩', text: '<strong>Insertar SmartArt:</strong> Insertar > SmartArt > elegir un tipo (Proceso, Jerarquía, Ciclo, etc.).' },
+                { icon: '✏️', text: '<strong>Escribir texto:</strong> En el panel de texto o directamente en las formas.' },
+                { icon: '🎨', text: '<strong>Cambiar diseño:</strong> Herramientas de SmartArt > Diseño para cambiar colores y estilo.' }
+            ]
+        });
+        // Día 3: Combinar correspondencia, macros, objetos, ecuaciones, proteger, revisión colaborativa
+        cursoIntermedio.push({
+            title: 'Combinar correspondencia (paso a paso)',
+            content: [
+                { icon: '📇', text: '<strong>Paso 1:</strong> Crear documento base (carta, etiqueta, etc.) con campos combinados.' },
+                { icon: '🔗', text: '<strong>Paso 2:</strong> Correspondencia > Iniciar combinación > Elegir tipo de documento.' },
+                { icon: '📋', text: '<strong>Paso 3:</strong> Seleccionar destinatarios > Usar lista existente (Excel, Outlook).' },
+                { icon: '✏️', text: '<strong>Paso 4:</strong> Insertar campo combinado (Nombre, Dirección, etc.) en el documento.' },
+                { icon: '▶️', text: '<strong>Paso 5:</strong> Finalizar y combinar > Imprimir o Editar documentos individuales.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Grabar y ejecutar macros básicas',
+            content: [
+                { icon: '🎬', text: '<strong>Grabar macro:</strong> Vista > Macros > Grabar macro. Asignar nombre y tecla.' },
+                { icon: '▶️', text: '<strong>Ejecutar:</strong> Vista > Macros > Ver macros > Ejecutar.' },
+                { icon: '🔘', text: '<strong>Asignar a botón:</strong> Insertar un botón en la barra de acceso rápido o en la cinta.' },
+                { icon: '📖', text: '<strong>Editor de VBA:</strong> Alt+F11 para modificar o escribir código.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Insertar objetos: Excel, PowerPoint, ecuaciones',
+            content: [
+                { icon: '🔗', text: '<strong>Insertar objeto:</strong> Insertar > Objeto > Crear desde archivo (incrustar hoja Excel, presentación).' },
+                { icon: '📊', text: '<strong>Vincular:</strong> Marcar "Vincular" para que se actualice automáticamente al cambiar el origen.' },
+                { icon: '📐', text: '<strong>Ecuaciones:</strong> Insertar > Ecuación para escribir fórmulas matemáticas con editor.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Proteger documento con contraseña',
+            content: [
+                { icon: '🔒', text: '<strong>Proteger con contraseña:</strong> Archivo > Información > Proteger documento > Cifrar con contraseña.' },
+                { icon: '🔑', text: '<strong>Escribir y confirmar contraseña.</strong> Se necesitará para abrir el archivo.' },
+                { icon: '⚠️', text: '<strong>Importante:</strong> Guarda la contraseña en un lugar seguro, no se puede recuperar.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Revisión colaborativa (control de cambios)',
+            content: [
+                { icon: '👥', text: '<strong>Activar control de cambios:</strong> Revisar > Control de cambios > Resaltar cambios.' },
+                { icon: '✏️', text: '<strong>Insertar comentarios:</strong> Revisar > Nuevo comentario para dejar notas.' },
+                { icon: '🔄', text: '<strong>Aceptar/rechazar:</strong> Revisar > Aceptar o Rechazar para aplicar cambios sugeridos.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Tablas de figuras y tablas de ilustraciones',
+            content: [
+                { icon: '📊', text: '<strong>Insertar tabla de figuras:</strong> Referencias > Insertar tabla de ilustraciones. Requiere que las imágenes tengan títulos.' },
+                { icon: '🏷️', text: '<strong>Agregar título:</strong> Clic derecho en imagen > Insertar título > elegir etiqueta (Figura, Tabla).' },
+                { icon: '🔄', text: '<strong>Actualizar:</strong> Clic derecho en la tabla > Actualizar campo.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Atajos avanzados y personalización',
+            content: [
+                { icon: '⌨️', text: '<strong>Ctrl+Mayús+N:</strong> Aplicar estilo Normal.' },
+                { icon: '⌨️', text: '<strong>Ctrl+Alt+1/2/3:</strong> Aplicar Título 1, 2, 3.' },
+                { icon: '⌨️', text: '<strong>F12:</strong> Guardar como.' },
+                { icon: '⌨️', text: '<strong>Alt+F9:</strong> Mostrar códigos de campo.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Resumen y siguientes pasos (Intermedio)',
+            content: [
+                { icon: '🌟', text: '<strong>Has aprendido:</strong> Estilos avanzados, esquemas, tabla de contenido, encabezados/pies, columnas, saltos, secciones, tablas avanzadas, gráficos, SmartArt, combinación de correspondencia, macros, objetos, protección, control de cambios y más.' },
+                { icon: '🚀', text: '<strong>Siguiente nivel:</strong> Explorar VBA para Word, automatización compleja, integración con bases de datos.' },
+                { icon: '💪', text: '<strong>Proyecto final:</strong> Crea un documento extenso con índice, tablas de figuras, combinación de correspondencia y una macro simple.' }
+            ]
+        });
+
+        // ================================================================
+        // LÓGICA DE LA APLICACIÓN
+        // ================================================================
+
+        let currentCourse = 'basico'; // 'basico' o 'intermedio'
+        let currentIndex = 0;
+
+        function getSlides() {
+            return currentCourse === 'basico' ? cursoBasico : cursoIntermedio;
+        }
+
+        function getTotalSlides() {
+            return getSlides().length;
+        }
+
+        const mainTitle = document.getElementById('mainTitle');
+        const badgeLevel = document.getElementById('badgeLevel');
+        const slideCounter = document.getElementById('slideCounter');
+        const slideContent = document.getElementById('slideContent');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indexBtn = document.getElementById('indexBtn');
+        const modal = document.getElementById('indexModal');
+        const indexList = document.getElementById('indexList');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modalTitle = document.getElementById('modalTitle');
+        const btnBasico = document.getElementById('btnBasico');
+        const btnIntermedio = document.getElementById('btnIntermedio');
+
+        function renderSlide(index) {
+            const slides = getSlides();
+            const slide = slides[index];
+            if (!slide) return;
+
+            const isIntermedio = currentCourse === 'intermedio';
+            const nivelText = isIntermedio ? 'Intermedio' : 'Básico';
+            const icono = isIntermedio ? '📙' : '📘';
+            mainTitle.textContent = `${icono} Word ${nivelText} - Día ${Math.floor(index/6)+1}`;
+            badgeLevel.textContent = nivelText;
+            badgeLevel.className = `badge ${isIntermedio ? 'badge-intermedio' : 'badge-basico'}`;
+            slideCounter.textContent = `${index+1} / ${getTotalSlides()}`;
+
+            let html = `<h2 class="${isIntermedio ? 'intermedio' : ''}">${slide.title}</h2>`;
+            html += `<ul class="step-list">`;
+            slide.content.forEach(item => {
+                const liClass = isIntermedio ? 'intermedio' : '';
+                html += `<li class="${liClass}">`;
+                html += `<span class="icon">${item.icon || '📌'}</span>`;
+                html += `<span class="text">${item.text}</span>`;
+                html += `</li>`;
+            });
+            html += `</ul>`;
+
+            // Elementos visuales adicionales para ciertas diapositivas
+            if (slide.title.includes('Combinar correspondencia')) {
+                html += `<div class="visual-grid">
+                            <div class="item">📋 Documento base</div>
+                            <div class="item">➕</div>
+                            <div class="item">📇 Lista de datos (Excel)</div>
+                            <div class="item">➡️</div>
+                            <div class="item">📄 Documentos personalizados</div>
+                        </div>`;
+            }
+            if (slide.title.includes('Tabla de contenido')) {
+                html += `<div class="tip">💡 <strong>Tip:</strong> Para actualizar la tabla de contenido, pulsa F9 o clic derecho > Actualizar campo.</div>`;
+            }
+            if (slide.title.includes('Columnas')) {
+                html += `<div class="example-box ${isIntermedio ? 'intermedio' : ''}">📰 <strong>Ejemplo:</strong> Ideal para boletines, folletos o artículos estilo periódico.</div>`;
+            }
+
+            slideContent.innerHTML = html;
+
+            prevBtn.disabled = (index === 0);
+            const isLast = (index === getTotalSlides() - 1);
+            nextBtn.textContent = isLast ? '🏁 Finalizar' : 'Siguiente ▶';
+            nextBtn.className = `primary-${isIntermedio ? 'intermedio' : 'basico'}`;
+        }
+
+        function goTo(index) {
+            const total = getTotalSlides();
+            if (index < 0) index = 0;
+            if (index >= total) index = total - 1;
+            currentIndex = index;
+            renderSlide(currentIndex);
+        }
+
+        function changeCourse(course) {
+            if (course === currentCourse) return;
+            currentCourse = course;
+            currentIndex = 0;
+            btnBasico.className = course === 'basico' ? 'active-basico' : '';
+            btnIntermedio.className = course === 'intermedio' ? 'active-intermedio' : '';
+            renderSlide(0);
+            const nivel = course === 'intermedio' ? 'Intermedio' : 'Básico';
+            modalTitle.textContent = `📋 Índice - Word ${nivel}`;
+        }
+
+        prevBtn.addEventListener('click', () => goTo(currentIndex - 1));
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex === getTotalSlides() - 1) {
+                alert(`🎉 ¡Has completado el curso de Word ${currentCourse === 'intermedio' ? 'Intermedio' : 'Básico'}! Revisa el índice para repasar.`);
+                return;
+            }
+            goTo(currentIndex + 1);
+        });
+
+        btnBasico.addEventListener('click', () => changeCourse('basico'));
+        btnIntermedio.addEventListener('click', () => changeCourse('intermedio'));
+
+        function openIndex() {
+            const slides = getSlides();
+            const isIntermedio = currentCourse === 'intermedio';
+            let html = '';
+            slides.forEach((slide, idx) => {
+                const day = Math.floor(idx/6) + 1;
+                html += `<div class="index-item" data-index="${idx}">
+                            <span>${isIntermedio ? '📙' : '📘'} ${slide.title}</span>
+                            <span class="idx-badge ${isIntermedio ? 'intermedio' : ''}">Día ${day}</span>
+                        </div>`;
+            });
+            indexList.innerHTML = html;
+            document.querySelectorAll('.index-item').forEach(el => {
+                el.addEventListener('click', function() {
+                    const idx = parseInt(this.dataset.index);
+                    goTo(idx);
+                    modal.classList.remove('active');
+                });
+            });
+            modal.classList.add('active');
+        }
+
+        indexBtn.addEventListener('click', openIndex);
+        closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+
+        // Inicializar
+        changeCourse('basico');
+    </script>
+</body>
+</html>

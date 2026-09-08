@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LD SmartLab - Cursos de Informática y Ofimática</title>
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ---------- VARIABLES Y RESET ---------- */
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-light: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.12);
+            --gradient-start: #6366f1;
+            --gradient-end: #8b5cf6;
+            --gradient: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            --accent: #7c3aed;
+            --accent-hover: #6d28d9;
+            --radius: 20px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: 'Inter', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-light: #94a3b8;
+            --border-color: #334155;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---------- HEADER / NAVBAR ---------- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 0;
+            z-index: 1000;
+            transition: background 0.3s, border-color 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .logo i {
+            -webkit-text-fill-color: initial;
+            color: var(--accent);
+            margin-right: 6px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links .btn-nav {
+            background: var(--gradient);
+            color: #fff !important;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-links .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+            color: #fff !important;
+        }
+
+        /* Toggle modo oscuro */
+        .theme-toggle {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 40px;
+            padding: 6px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .theme-toggle i {
+            font-size: 16px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--border-color);
+        }
+
+        /* Menú hamburguesa para móvil */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            padding: 140px 0 80px;
+            background: var(--bg-primary);
+            transition: background 0.3s;
+        }
+
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero-content h1 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: #fff;
+            padding: 14px 34px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.35);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 14px 34px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 16px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* ---------- SECCIÓN CURSOS ---------- */
+        .courses {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+            transition: background 0.3s;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .course-card .icon {
+            font-size: 52px;
+            margin-bottom: 16px;
+            color: var(--accent);
+        }
+
+        .course-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .course-card p {
+            color: var(--text-light);
+            font-size: 15px;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .course-card .btn-card {
+            background: var(--gradient);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .course-card .btn-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        /* ---------- MISIÓN, VISIÓN, OBJETIVO ---------- */
+        .about {
+            padding: 80px 0;
+            background: var(--bg-primary);
+            transition: background 0.3s;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .about-item {
+            background: var(--bg-card);
+            padding: 32px 28px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .about-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .about-item i {
+            font-size: 40px;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .about-item h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .about-item p {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        /* ---------- TESTIMONIOS ---------- */
+        .testimonials {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+            transition: background 0.3s;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--bg-card);
+            padding: 28px 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .testimonial-card .stars {
+            color: #fbbf24;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .testimonial-card p {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-card .author {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .testimonial-card .role {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* ---------- CONTACTO / OPINIÓN ---------- */
+        .contact {
+            padding: 80px 0;
+            background: var(--bg-primary);
+            transition: background 0.3s;
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .contact-info h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .contact-info p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .contact-info .detail {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .contact-info .detail i {
+            color: var(--accent);
+            width: 24px;
+            font-size: 20px;
+        }
+
+        .contact-form {
+            background: var(--bg-card);
+            padding: 32px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .contact-form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 15px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: border-color 0.2s;
+            font-family: var(--font);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+        }
+
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-form .btn-submit {
+            background: var(--gradient);
+            color: #fff;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        .contact-form .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        /* ---------- FOOTER ---------- */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 14px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .footer a {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 992px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-content p {
+                margin: 0 auto 32px;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .about-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding-top: 16px;
+                gap: 16px;
+                align-items: center;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-content h1 {
+                font-size: 34px;
+            }
+            .section-header h2 {
+                font-size: 28px;
+            }
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-form {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 120px 0 60px;
+            }
+            .hero-content h1 {
+                font-size: 28px;
+            }
+            .btn-primary, .btn-secondary {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+        }
+
+        /* ---------- ANIMACIONES ---------- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <!-- ========== NAVBAR ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-brain"></i> LD SmartLab
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Menú">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="#cursos">Cursos</a>
+                <a href="#about">Nosotros</a>
+                <a href="#testimonios">Reseñas</a>
+                <a href="#contacto">Contacto</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                    <i class="fas fa-moon"></i> <span id="themeLabel">Oscuro</span>
+                </button>
+                <a href="#cursos" class="btn-nav"><i class="fas fa-rocket"></i> Empezar</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1>Aprende <span>informática y ofimática</span> con cursos prácticos</h1>
+                <p>Domina Excel, Word, PowerPoint y fundamentos de informática desde cero hasta nivel intermedio. LD SmartLab te guía paso a paso.</p>
+                <div class="hero-buttons">
+                    <a href="#cursos" class="btn-primary"><i class="fas fa-play"></i> Ver cursos</a>
+                    <a href="#about" class="btn-secondary"><i class="fas fa-info-circle"></i> Conócenos</a>
+                </div>
+            </div>
+            <div class="hero-image fade-in delay-1">
+                <img src="https://via.placeholder.com/500x400/6366f1/ffffff?text=LD+SmartLab" alt="LD SmartLab">
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CURSOS ========== -->
+    <section class="courses" id="cursos">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Nuestros Cursos</h2>
+                <p>Elige el curso que necesites y comienza a aprender hoy mismo. Todos incluyen teoría, ejemplos y ejercicios.</p>
+            </div>
+            <div class="courses-grid">
+                <!-- Curso Básico Excel -->
+                <div class="course-card fade-in delay-1">
+                    <div class="icon"><i class="fas fa-file-excel"></i></div>
+                    <h3>Excel Básico</h3>
+                    <p>Domina las hojas de cálculo desde cero: fórmulas, formato, gráficos y más.</p>
+                    <a href="CURSO BÁSICO EXCEL#1.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
+                </div>
+                <!-- Curso Intermedio Excel -->
+                <div class="course-card fade-in delay-2">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Excel Intermedio</h3>
+                    <p>Funciones lógicas, tablas dinámicas, búsquedas avanzadas y macros básicas.</p>
+                    <a href="CURSO EXCEL INTERMEDIO#1.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
+                </div>
+                <!-- Word Básico-Intermedio -->
+                <div class="course-card fade-in delay-3">
+                    <div class="icon"><i class="fas fa-file-word"></i></div>
+                    <h3>Word Básico - Intermedio</h3>
+                    <p>Desde la edición básica hasta tablas de contenido, combinación de correspondencia y macros.</p>
+                    <a href="CURSO BÁSICO-INTERMEDIO WORD#1.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
+                </div>
+                <!-- PowerPoint Básico-Intermedio -->
+                <div class="course-card fade-in delay-4">
+                    <div class="icon"><i class="fas fa-file-powerpoint"></i></div>
+                    <h3>PowerPoint Básico - Intermedio</h3>
+                    <p>Crea presentaciones impactantes con diapositivas maestras, animaciones y multimedia.</p>
+                    <a href="CURSO BÁSICO-INTERMEDIO POWERPOINT#1.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
+                </div>
+                <!-- Informática Básica-Intermedio -->
+                <div class="course-card fade-in delay-5">
+                    <div class="icon"><i class="fas fa-desktop"></i></div>
+                    <h3>Informática Básica - Intermedia</h3>
+                    <p>Hardware, software, redes, seguridad, virtualización y automatización con scripts.</p>
+                    <a href="CURSO BÁSICO-INTERMEDIO INFORMÁTICA#1.html" class="btn-card" target="_blank"><i class="fas fa-external-link-alt"></i> Ir al curso</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== MISIÓN, VISIÓN, OBJETIVO ========== -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Misión, Visión y Objetivo</h2>
+                <p>En LD SmartLab nos apasiona la educación tecnológica accesible para todos.</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-item fade-in delay-1">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Misión</h3>
+                    <p>Empoderar a las personas con habilidades digitales prácticas mediante cursos claros, estructurados y aplicables al mundo real.</p>
+                </div>
+                <div class="about-item fade-in delay-2">
+                    <i class="fas fa-eye"></i>
+                    <h3>Visión</h3>
+                    <p>Convertirnos en el referente de formación ofimática e informática para hispanohablantes, con una comunidad activa y en constante aprendizaje.</p>
+                </div>
+                <div class="about-item fade-in delay-3">
+                    <i class="fas fa-flag-checkered"></i>
+                    <h3>Objetivo</h3>
+                    <p>Ofrecer cursos de calidad que permitan a cualquier persona, sin importar su nivel, dominar las herramientas tecnológicas más demandadas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TESTIMONIOS ========== -->
+    <section class="testimonials" id="testimonios">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Lo que dicen nuestros alumnos</h2>
+                <p>Reseñas reales de estudiantes que han transformado su carrera con nuestros cursos.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in delay-1">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"El curso de Excel intermedio me ayudó a conseguir un ascenso en mi trabajo. Las explicaciones son muy claras y los ejemplos prácticos son excelentes."</p>
+                    <div class="author">María González</div>
+                    <div class="role">Analista financiera</div>
+                </div>
+                <div class="testimonial-card fade-in delay-2">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"Nunca había entendido Word más allá de lo básico. Con el curso intermedio aprendí a hacer tablas de contenido y combinación de correspondencia. ¡Increíble!"</p>
+                    <div class="author">Carlos Ruiz</div>
+                    <div class="role">Administrativo</div>
+                </div>
+                <div class="testimonial-card fade-in delay-3">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"Los cursos de informática me dieron confianza para manejar mi computadora, redes y hasta hacer scripts básicos. Muy recomendable para principiantes."</p>
+                    <div class="author">Laura Fernández</div>
+                    <div class="role">Emprendedora</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CONTACTO / OPINIÓN ========== -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Envíanos tu opinión</h2>
+                <p>Déjanos tus comentarios, sugerencias o dudas. ¡Tu opinión nos ayuda a mejorar!</p>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info fade-in delay-1">
+                    <h3>¡Conéctate con nosotros!</h3>
+                    <p>Estamos aquí para ayudarte. Puedes escribirnos directamente a nuestro correo o llenar el formulario.</p>
+                    <div class="detail"><i class="fas fa-envelope"></i> luisdanielramoscorona@outlook.com</div>
+                    <div class="detail"><i class="fas fa-globe"></i> www.ldsmartlab.com</div>
+                    <div class="detail"><i class="fas fa-map-pin"></i> Online - Acceso desde cualquier lugar</div>
+                </div>
+                <div class="contact-form fade-in delay-2">
+                    <form action="mailto:luisdanielramoscorona@outlook.com" method="post" enctype="text/plain" onsubmit="return confirm('¿Enviar tu opinión a LD SmartLab?');">
+                        <div class="form-group">
+                            <label for="name">Nombre</label>
+                            <input type="text" id="name" name="Nombre" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" name="Correo" placeholder="tu@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Tu opinión o mensaje</label>
+                            <textarea id="message" name="Mensaje" placeholder="Escribe aquí tu opinión sobre los cursos o tu experiencia..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Enviar opinión</button>
+                    </form>
+                    <p style="margin-top: 16px; font-size: 14px; color: var(--text-light);">
+                        <i class="fas fa-info-circle"></i> Al enviar, se abrirá tu cliente de correo para que confirmes el envío.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 <strong>LD SmartLab</strong> — Cursos de informática y ofimática.</p>
+            <p style="margin-top: 6px;">
+                <a href="mailto:luisdanielramoscorona@outlook.com">luisdanielramoscorona@outlook.com</a> · 
+                <a href="#inicio">Inicio</a> · 
+                <a href="#cursos">Cursos</a> · 
+                <a href="#contacto">Contacto</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        // ---------- MODO OSCURO / CLARO ----------
+        const themeToggle = document.getElementById('themeToggle');
+        const themeLabel = document.getElementById('themeLabel');
+        const html = document.documentElement;
+
+        // Cargar preferencia guardada
+        if (localStorage.getItem('theme') === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeLabel.textContent = 'Claro';
+            themeToggle.querySelector('i').className = 'fas fa-sun';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeLabel.textContent = 'Oscuro';
+                themeToggle.querySelector('i').className = 'fas fa-moon';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeLabel.textContent = 'Claro';
+                themeToggle.querySelector('i').className = 'fas fa-sun';
+            }
+        });
+
+        // ---------- MENÚ HAMBURGUESA ----------
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+
+        // Cerrar menú al hacer clic en un enlace (móvil)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // ---------- ANIMACIONES AL SCROLL (IntersectionObserver) ----------
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.15 });
+
+        fadeElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            observer.observe(el);
+        });
+
+        // Asegurar que los elementos visibles al cargar se muestren
+        window.addEventListener('load', () => {
+            fadeElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

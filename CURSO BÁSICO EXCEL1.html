@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso Excel Básico a Intermedio en 3 días</title>
+    <style>
+        /* Reset y base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .presentation-container {
+            max-width: 1200px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px 30px 30px;
+            transition: all 0.3s;
+        }
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e9edf4;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .header .badge {
+            background: #3498db;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .header .badge.intermedio {
+            background: #2ecc71;
+        }
+        .header .slide-counter {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        /* Contenido principal */
+        .slide-content {
+            min-height: 420px;
+            padding: 10px 5px 20px;
+        }
+        .slide-content h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-left: 6px solid #3498db;
+            padding-left: 15px;
+        }
+        .slide-content h2.intermedio {
+            border-left-color: #2ecc71;
+        }
+        .slide-content .step-list {
+            list-style: none;
+            padding: 0;
+        }
+        .slide-content .step-list li {
+            background: #f8faff;
+            margin-bottom: 16px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.6;
+            color: #1e2a3a;
+        }
+        .slide-content .step-list li.intermedio {
+            border-left-color: #2ecc71;
+        }
+        .slide-content .step-list li .icon {
+            font-size: 28px;
+            min-width: 40px;
+            text-align: center;
+        }
+        .slide-content .step-list li .text {
+            flex: 1;
+        }
+        .slide-content .step-list li .text strong {
+            color: #2c3e50;
+        }
+        .slide-content .example-box {
+            background: #f0f7ff;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin: 15px 0 10px;
+            border: 1px dashed #b3d4fc;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+        }
+        .slide-content .example-box.intermedio {
+            background: #f0faf5;
+            border-color: #a3e4c7;
+        }
+        .slide-content .tip {
+            background: #fff9e6;
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin: 12px 0;
+            border-left: 5px solid #f1c40f;
+            font-size: 15px;
+        }
+        /* Navegación */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e9edf4;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .nav-buttons button {
+            background: #ecf0f3;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 15px;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-buttons button:hover {
+            background: #d5dde6;
+        }
+        .nav-buttons button.primary {
+            background: #3498db;
+            color: white;
+        }
+        .nav-buttons button.primary:hover {
+            background: #2980b9;
+        }
+        .nav-buttons button.primary.intermedio {
+            background: #2ecc71;
+        }
+        .nav-buttons button.primary.intermedio:hover {
+            background: #27ae60;
+        }
+        .index-btn {
+            background: #bdc3c7;
+            color: #2c3e50;
+        }
+        .index-btn:hover {
+            background: #a0a8af;
+        }
+        /* Índice modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: white;
+            border-radius: 24px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-box h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #e9edf4;
+            padding-bottom: 12px;
+        }
+        .modal-box .index-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f3f8;
+            cursor: pointer;
+            transition: 0.1s;
+            color: #2c3e50;
+        }
+        .modal-box .index-item:hover {
+            background: #f7faff;
+            padding-left: 8px;
+        }
+        .modal-box .index-item .idx-badge {
+            background: #3498db;
+            color: white;
+            border-radius: 30px;
+            padding: 2px 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .modal-box .index-item .idx-badge.intermedio {
+            background: #2ecc71;
+        }
+        .close-modal {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .close-modal:hover {
+            background: #c0392b;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .presentation-container { padding: 15px; }
+            .header h1 { font-size: 20px; }
+            .slide-content h2 { font-size: 22px; }
+            .nav-buttons button { padding: 8px 14px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container" id="app">
+        <div class="header">
+            <h1 id="mainTitle">📘 Excel Básico - Día 1</h1>
+            <div>
+                <span class="badge" id="badgeLevel">Básico</span>
+                <span class="slide-counter" id="slideCounter">1 / 30</span>
+            </div>
+        </div>
+
+        <div class="slide-content" id="slideContent">
+            <!-- Renderizado por JS -->
+        </div>
+
+        <div class="navigation">
+            <div class="nav-buttons">
+                <button id="prevBtn">◀ Anterior</button>
+                <button id="nextBtn" class="primary">Siguiente ▶</button>
+            </div>
+            <div class="nav-buttons">
+                <button id="indexBtn" class="index-btn">📋 Índice</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal índice -->
+    <div class="modal-overlay" id="indexModal">
+        <div class="modal-box">
+            <h3>📋 Índice de diapositivas</h3>
+            <div id="indexList"></div>
+            <button class="close-modal" id="closeModalBtn">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // --------------------------------------------------------------
+        // DEFINICIÓN DE DIAPOSITIVAS (30+ diapositivas)
+        // Cada objeto: { title, level: 'basico'|'intermedio', content: array de pasos o texto, icon?: string }
+        // Para simular imágenes usamos emojis en el icon y descripciones claras.
+        // --------------------------------------------------------------
+        const slides = [];
+
+        // ========== CURSO BÁSICO - DÍA 1 ==========
+        slides.push({
+            title: 'Introducción a Excel',
+            level: 'basico',
+            content: [
+                { icon: '📊', text: '<strong>¿Qué es Excel?</strong> Hoja de cálculo electrónica de Microsoft, usada para organizar, analizar y visualizar datos.' },
+                { icon: '💼', text: '<strong>Aplicaciones comunes:</strong> Finanzas, contabilidad, administración, análisis de datos, planificación, etc.' },
+                { icon: '🖥️', text: '<strong>Versiones:</strong> Excel 2016, 2019, 2021, Microsoft 365 (la mayoría de funciones son similares).' }
+            ]
+        });
+        slides.push({
+            title: 'Interfaz de Excel',
+            level: 'basico',
+            content: [
+                { icon: '📌', text: '<strong>Elementos principales:</strong> Barra de título, cinta de opciones (pestañas: Inicio, Insertar, etc.), barra de fórmulas, cuadrícula de celdas, barra de estado.' },
+                { icon: '🔢', text: '<strong>Filas, columnas y celdas:</strong> Las filas se numeran (1,2,3...), las columnas con letras (A,B,C...). Una celda es la intersección (ej. B5).' },
+                { icon: '📏', text: '<strong>Barra de fórmulas:</strong> Muestra el contenido de la celda seleccionada y permite escribir fórmulas.' }
+            ]
+        });
+        slides.push({
+            title: 'Navegación y selección',
+            level: 'basico',
+            content: [
+                { icon: '⌨️', text: '<strong>Teclas de desplazamiento:</strong> Flechas, Tab, Enter, Inicio, Fin, Ctrl+Inicio (ir a A1), Ctrl+Fin (última celda usada).' },
+                { icon: '🖱️', text: '<strong>Selección con ratón:</strong> Clic en celda, arrastrar para seleccionar rango, Shift+clic para extender.' },
+                { icon: '📋', text: '<strong>Seleccionar fila/columna:</strong> Clic en el número de fila o letra de columna. Para seleccionar toda la hoja, clic en el triángulo superior izquierdo.' }
+            ]
+        });
+        slides.push({
+            title: 'Ingreso de datos',
+            level: 'basico',
+            content: [
+                { icon: '✏️', text: '<strong>Escribir en una celda:</strong> Seleccionar, escribir y presionar Enter (o Tab para mover a la derecha).' },
+                { icon: '📅', text: '<strong>Tipos de datos:</strong> Texto (izquierda), números (derecha), fechas (formato especial), fórmulas (empiezan con =).' },
+                { icon: '📝', text: '<strong>Editar contenido:</strong> Doble clic en la celda o presionar F2. También borrar con Supr o Retroceso.' }
+            ]
+        });
+        slides.push({
+            title: 'Edición y deshacer',
+            level: 'basico',
+            content: [
+                { icon: '↩️', text: '<strong>Deshacer (Ctrl+Z):</strong> Revierte la última acción. Rehacer (Ctrl+Y) para repetir.' },
+                { icon: '✂️', text: '<strong>Cortar, copiar y pegar:</strong> Ctrl+X, Ctrl+C, Ctrl+V. También con botones en Inicio.' },
+                { icon: '🧹', text: '<strong>Borrar contenido:</strong> Seleccionar y presionar Supr. Para borrar formatos, usar Inicio > Borrar > Borrar formatos.' }
+            ]
+        });
+        slides.push({
+            title: 'Formatos básicos de celda',
+            level: 'basico',
+            content: [
+                { icon: '🔤', text: '<strong>Fuente, tamaño, negrita, cursiva:</strong> Usar la pestaña Inicio en el grupo Fuente.' },
+                { icon: '🎨', text: '<strong>Color de fondo y fuente:</strong> Botones de color de relleno y color de fuente.' },
+                { icon: '↔️', text: '<strong>Alineación:</strong> Izquierda, centro, derecha. También orientación vertical y ajuste de texto.' }
+            ]
+        });
+        slides.push({
+            title: 'Operaciones aritméticas básicas',
+            level: 'basico',
+            content: [
+                { icon: '➕', text: '<strong>Suma:</strong> =A1+B1 o =SUMA(A1:B1)' },
+                { icon: '➖', text: '<strong>Resta:</strong> =A1-B1' },
+                { icon: '✖️', text: '<strong>Multiplicación:</strong> =A1*B1' },
+                { icon: '➗', text: '<strong>División:</strong> =A1/B1' },
+                { icon: '📐', text: '<strong>Ejemplo:</strong> En A1=10, B1=5, en C1 escribe =A1+B1 → 15.' }
+            ]
+        });
+        slides.push({
+            title: 'Referencias relativas y absolutas',
+            level: 'basico',
+            content: [
+                { icon: '🔄', text: '<strong>Referencia relativa:</strong> Al copiar una fórmula, las referencias se ajustan automáticamente (ej. =A1+B1 al copiar a la derecha se convierte en =B1+C1).' },
+                { icon: '🔒', text: '<strong>Referencia absoluta:</strong> Fija una celda con $ (ej. =$A$1+B1). Al copiar, $A$1 no cambia.' },
+                { icon: '📌', text: '<strong>Mixtas:</strong> =$A1 (columna absoluta) o =A$1 (fila absoluta).' }
+            ]
+        });
+        slides.push({
+            title: 'Autosuma y relleno rápido',
+            level: 'basico',
+            content: [
+                { icon: '∑', text: '<strong>Autosuma:</strong> Botón Σ en Inicio, suma automáticamente un rango contiguo.' },
+                { icon: '🧩', text: '<strong>Relleno rápido (Ctrl+E):</strong> Extrae patrones, por ejemplo, nombres completos a partir de nombre y apellido.' },
+                { icon: '📥', text: '<strong>Rellenar hacia abajo/derecha:</strong> Seleccionar celda con fórmula y arrastrar el controlador de relleno (esquina inferior derecha).' }
+            ]
+        });
+        slides.push({
+            title: 'Guardar y abrir archivos',
+            level: 'basico',
+            content: [
+                { icon: '💾', text: '<strong>Guardar (Ctrl+G):</strong> Guarda el archivo. Guardar como para cambiar nombre o formato (.xlsx, .xls).' },
+                { icon: '📂', text: '<strong>Abrir (Ctrl+A):</strong> Archivo > Abrir o navegar por el explorador.' },
+                { icon: '📁', text: '<strong>Formatos:</strong> .xlsx (predeterminado), .xls (compatible con versiones antiguas), .csv (texto separado por comas).' }
+            ]
+        });
+
+        // ========== CURSO BÁSICO - DÍA 2 ==========
+        slides.push({
+            title: 'Funciones básicas: SUMA, PROMEDIO, CONTAR',
+            level: 'basico',
+            content: [
+                { icon: '📊', text: '<strong>SUMA:</strong> =SUMA(rango) - suma todos los números.' },
+                { icon: '📈', text: '<strong>PROMEDIO:</strong> =PROMEDIO(rango) - calcula la media aritmética.' },
+                { icon: '🔢', text: '<strong>CONTAR:</strong> =CONTAR(rango) - cuenta celdas con números.' },
+                { icon: '📝', text: '<strong>CONTARA:</strong> =CONTARA(rango) - cuenta celdas no vacías (texto, números).' }
+            ]
+        });
+        slides.push({
+            title: 'Funciones MAX y MIN',
+            level: 'basico',
+            content: [
+                { icon: '⬆️', text: '<strong>MAX:</strong> =MAX(rango) - devuelve el valor máximo.' },
+                { icon: '⬇️', text: '<strong>MIN:</strong> =MIN(rango) - devuelve el valor mínimo.' },
+                { icon: '💡', text: '<strong>Ejemplo:</strong> =MAX(A1:A10) encuentra el número más alto en ese rango.' }
+            ]
+        });
+        slides.push({
+            title: 'Formato de números y fechas',
+            level: 'basico',
+            content: [
+                { icon: '💰', text: '<strong>Moneda:</strong> Seleccionar celdas > Inicio > Número > Moneda o Contabilidad.' },
+                { icon: '%', text: '<strong>Porcentaje:</strong> Multiplica por 100 y añade %.' },
+                { icon: '📅', text: '<strong>Fecha:</strong> Formato corto (dd/mm/aaaa) o largo.' },
+                { icon: '🔢', text: '<strong>Número con decimales:</strong> Aumentar o disminuir decimales.' }
+            ]
+        });
+        slides.push({
+            title: 'Estilos y temas de celda',
+            level: 'basico',
+            content: [
+                { icon: '🎨', text: '<strong>Estilos predefinidos:</strong> Inicio > Estilos de celda. Aplican formato combinado.' },
+                { icon: '🖌️', text: '<strong>Formato de tabla:</strong> Insertar > Tabla, convierte el rango en tabla con estilos y filtros automáticos.' },
+                { icon: '🌈', text: '<strong>Temas:</strong> Diseño de página > Temas, cambia colores y fuentes globalmente.' }
+            ]
+        });
+        slides.push({
+            title: 'Insertar y eliminar filas/columnas',
+            level: 'basico',
+            content: [
+                { icon: '➕', text: '<strong>Insertar fila:</strong> Seleccionar fila > clic derecho > Insertar. O desde Inicio > Insertar > Insertar filas de hoja.' },
+                { icon: '➖', text: '<strong>Eliminar fila:</strong> Similar, clic derecho > Eliminar.' },
+                { icon: '↔️', text: '<strong>Insertar columna:</strong> Mismo procedimiento sobre una columna.' }
+            ]
+        });
+        slides.push({
+            title: 'Ordenar datos',
+            level: 'basico',
+            content: [
+                { icon: '🔽', text: '<strong>Orden ascendente:</strong> De A a Z o de menor a mayor.' },
+                { icon: '🔼', text: '<strong>Orden descendente:</strong> De Z a A o de mayor a menor.' },
+                { icon: '🧩', text: '<strong>Ordenar por varias columnas:</strong> Datos > Ordenar > Agregar nivel.' }
+            ]
+        });
+        slides.push({
+            title: 'Filtrado automático (Autofiltro)',
+            level: 'basico',
+            content: [
+                { icon: '🔍', text: '<strong>Activar filtro:</strong> Seleccionar rango > Datos > Filtro. Aparecen flechas en los encabezados.' },
+                { icon: '✅', text: '<strong>Filtrar por valores:</strong> Desplegar y seleccionar los valores que quieres mostrar.' },
+                { icon: '🎯', text: '<strong>Filtros personalizados:</strong> Filtros de texto, números o fechas (contiene, mayor que, etc.).' }
+            ]
+        });
+        slides.push({
+            title: 'Copiar y pegar especial',
+            level: 'basico',
+            content: [
+                { icon: '📋', text: '<strong>Pegado especial:</strong> Copiar (Ctrl+C) > clic derecho > Pegado especial. Opciones: Valores (solo números), Formatos, Fórmulas, Transponer, etc.' },
+                { icon: '📐', text: '<strong>Transponer:</strong> Cambia filas por columnas. Útil para reorganizar tablas.' },
+                { icon: '📏', text: '<strong>Pegar vínculo:</strong> Crea una referencia a los datos originales.' }
+            ]
+        });
+
+        // ========== CURSO BÁSICO - DÍA 3 ==========
+        slides.push({
+            title: 'Gráficos básicos (Columnas, Barras, Líneas)',
+            level: 'basico',
+            content: [
+                { icon: '📊', text: '<strong>Insertar gráfico:</strong> Seleccionar datos > Insertar > Gráficos recomendados o elegir tipo.' },
+                { icon: '📈', text: '<strong>Gráfico de columnas:</strong> Compara categorías. Barras horizontales similares.' },
+                { icon: '📉', text: '<strong>Gráfico de líneas:</strong> Muestra tendencias a lo largo del tiempo.' }
+            ]
+        });
+        slides.push({
+            title: 'Personalizar gráficos',
+            level: 'basico',
+            content: [
+                { icon: '✏️', text: '<strong>Títulos:</strong> Clic en el gráfico > Elementos del gráfico (➕) > Título del gráfico, títulos de ejes.' },
+                { icon: '🏷️', text: '<strong>Etiquetas de datos:</strong> Mostrar valores sobre las barras.' },
+                { icon: '🎨', text: '<strong>Colores y estilos:</strong> En Diseño de gráfico, cambiar colores y estilos rápidos.' }
+            ]
+        });
+        slides.push({
+            title: 'Configuración de página e impresión',
+            level: 'basico',
+            content: [
+                { icon: '📄', text: '<strong>Márgenes:</strong> Diseño de página > Márgenes > Personalizar.' },
+                { icon: '🔄', text: '<strong>Orientación:</strong> Vertical u Horizontal.' },
+                { icon: '📏', text: '<strong>Tamaño de papel:</strong> Carta, A4, etc.' }
+            ]
+        });
+        slides.push({
+            title: 'Vistas de Excel',
+            level: 'basico',
+            content: [
+                { icon: '👁️', text: '<strong>Normal:</strong> Vista estándar.' },
+                { icon: '📐', text: '<strong>Diseño de página:</strong> Muestra márgenes y encabezados/pies de página.' },
+                { icon: '📄', text: '<strong>Salto de página:</strong> Visualiza los saltos de página.' }
+            ]
+        });
+        slides.push({
+            title: 'Área de impresión y ajustes',
+            level: 'basico',
+            content: [
+                { icon: '🖨️', text: '<strong>Definir área de impresión:</strong> Seleccionar rango > Diseño de página > Área de impresión > Establecer.' },
+                { icon: '📏', text: '<strong>Ajustar a una página:</strong> En configuración de impresión, elegir "Ajustar a: 1 página de ancho por 1 de alto".' },
+                { icon: '📋', text: '<strong>Encabezados y pies:</strong> Personalizar en Diseño de página > Encabezado/pie de página.' }
+            ]
+        });
+        slides.push({
+            title: 'Proteger hoja y libro',
+            level: 'basico',
+            content: [
+                { icon: '🔒', text: '<strong>Proteger hoja:</strong> Revisar > Proteger hoja. Permite bloquear celdas para que no se modifiquen.' },
+                { icon: '🔐', text: '<strong>Proteger libro:</strong> Revisar > Proteger libro. Evita añadir/eliminar hojas.' },
+                { icon: '🔑', text: '<strong>Contraseña:</strong> Se puede establecer contraseña para abrir el archivo (Archivo > Información > Proteger libro).' }
+            ]
+        });
+        slides.push({
+            title: 'Resumen y consejos (Básico)',
+            level: 'basico',
+            content: [
+                { icon: '🌟', text: '<strong>Atajos útiles:</strong> Ctrl+C, Ctrl+V, Ctrl+Z, Ctrl+Inicio, Ctrl+F (buscar).' },
+                { icon: '📚', text: '<strong>Práctica:</strong> Realiza ejercicios de suma, promedio, gráficos y filtros con datos reales.' },
+                { icon: '🎯', text: '<strong>Siguiente nivel:</strong> Domina las bases para pasar al curso intermedio con confianza.' }
+            ]
+        });
+
+        // ========== CURSO INTERMEDIO - DÍA 1 ==========
+        slides.push({
+            title: 'Funciones lógicas: SI, Y, O',
+            level: 'intermedio',
+            content: [
+                { icon: '⚖️', text: '<strong>SI:</strong> =SI(prueba_lógica; valor_si_verdadero; valor_si_falso). Ej: =SI(A1>10, "Mayor", "Menor o igual")' },
+                { icon: '🤝', text: '<strong>Y:</strong> =Y(cond1; cond2; ...) devuelve VERDADERO si todas son ciertas.' },
+                { icon: '👥', text: '<strong>O:</strong> =O(cond1; cond2; ...) devuelve VERDADERO si al menos una es cierta.' }
+            ]
+        });
+        slides.push({
+            title: 'SI anidado y múltiples condiciones',
+            level: 'intermedio',
+            content: [
+                { icon: '🔗', text: '<strong>SI anidado:</strong> =SI(cond1; val1; SI(cond2; val2; val3)). Evalúa en orden.' },
+                { icon: '📊', text: '<strong>Ejemplo:</strong> Asignar nota: =SI(A1>=90, "Sobresaliente", SI(A1>=70, "Notable", SI(A1>=50, "Aprobado", "Suspenso")))' },
+                { icon: '💡', text: '<strong>Límite:</strong> Excel permite hasta 64 niveles de anidación, pero es más legible usar funciones como IFS.' }
+            ]
+        });
+        slides.push({
+            title: 'BUSCARV (Búsqueda vertical)',
+            level: 'intermedio',
+            content: [
+                { icon: '🔎', text: '<strong>Sintaxis:</strong> =BUSCARV(valor_buscado; tabla_matriz; num_columna; [ordenado])' },
+                { icon: '📋', text: '<strong>Ejemplo:</strong> =BUSCARV(A2; $F$2:$G$10; 2; FALSO) busca el valor en A2 en la primera columna del rango F2:G10 y devuelve la columna 2.' },
+                { icon: '⚠️', text: '<strong>Ordenado:</strong> FALSO para coincidencia exacta (recomendado). VERDADERO para aproximada (requiere orden ascendente).' }
+            ]
+        });
+        slides.push({
+            title: 'BUSCARH (Búsqueda horizontal)',
+            level: 'intermedio',
+            content: [
+                { icon: '🔎', text: '<strong>Sintaxis:</strong> =BUSCARH(valor_buscado; tabla_matriz; num_fila; [ordenado])' },
+                { icon: '📊', text: '<strong>Ejemplo:</strong> =BUSCARH(C1; $A$1:$E$5; 3; FALSO) busca C1 en la primera fila y devuelve el valor de la fila 3.' },
+                { icon: '🔄', text: '<strong>Diferencias:</strong> BUSCARV busca en columnas (vertical), BUSCARH en filas (horizontal).' }
+            ]
+        });
+        slides.push({
+            title: 'COINCIDIR e INDICE',
+            level: 'intermedio',
+            content: [
+                { icon: '🎯', text: '<strong>COINCIDIR:</strong> =COINCIDIR(valor_buscado; rango; [tipo]) devuelve la posición.' },
+                { icon: '📌', text: '<strong>INDICE:</strong> =INDICE(rango; num_fila; [num_columna]) devuelve el valor en esa posición.' },
+                { icon: '🔗', text: '<strong>Combinación:</strong> =INDICE(rango_devolución; COINCIDIR(valor; rango_búsqueda; 0)) es una alternativa más flexible a BUSCARV.' }
+            ]
+        });
+        slides.push({
+            title: 'Manejo de errores (SI.ERROR, SI.ND)',
+            level: 'intermedio',
+            content: [
+                { icon: '⚠️', text: '<strong>SI.ERROR:</strong> =SI.ERROR(valor; valor_si_error) - devuelve un valor alternativo si hay error.' },
+                { icon: '🚫', text: '<strong>SI.ND:</strong> =SI.ND(valor; valor_si_nd) - específico para error #N/D (no disponible).' },
+                { icon: '🛡️', text: '<strong>Ejemplo:</strong> =SI.ERROR(BUSCARV(A2; B:C; 2; FALSO); "No encontrado")' }
+            ]
+        });
+        slides.push({
+            title: 'Ejercicios prácticos con funciones lógicas y búsqueda',
+            level: 'intermedio',
+            content: [
+                { icon: '📝', text: '<strong>Ejercicio 1:</strong> Clasificar edades: =SI(A1>=18, "Mayor", "Menor")' },
+                { icon: '📝', text: '<strong>Ejercicio 2:</strong> Buscar precio de un producto usando BUSCARV.' },
+                { icon: '📝', text: '<strong>Ejercicio 3:</strong> Combinar INDICE y COINCIDIR para buscar en una tabla bidimensional.' }
+            ]
+        });
+
+        // ========== CURSO INTERMEDIO - DÍA 2 ==========
+        slides.push({
+            title: 'Tablas dinámicas: creación y campos',
+            level: 'intermedio',
+            content: [
+                { icon: '📊', text: '<strong>Crear tabla dinámica:</strong> Seleccionar datos > Insertar > Tabla dinámica. Elegir ubicación.' },
+                { icon: '🔄', text: '<strong>Campos:</strong> Arrastrar campos a FILAS, COLUMNAS, VALORES y FILTROS.' },
+                { icon: '📈', text: '<strong>Valores:</strong> Por defecto suma, pero se puede cambiar a contar, promedio, etc.' }
+            ]
+        });
+        slides.push({
+            title: 'Modificar y actualizar tabla dinámica',
+            level: 'intermedio',
+            content: [
+                { icon: '✏️', text: '<strong>Actualizar:</strong> Clic derecho > Actualizar, o desde la pestaña Analizar > Actualizar.' },
+                { icon: '🔧', text: '<strong>Cambiar diseño:</strong> Pestaña Diseño > Estilos, subtotales, totales generales.' },
+                { icon: '⚙️', text: '<strong>Opciones de campo:</strong> Configurar resumen (suma, promedio, contar, etc.) y formato de número.' }
+            ]
+        });
+        slides.push({
+            title: 'Segmentaciones de datos (Slicers)',
+            level: 'intermedio',
+            content: [
+                { icon: '🧩', text: '<strong>Insertar segmentación:</strong> Seleccionar tabla dinámica > Analizar > Insertar segmentación. Elegir campo.' },
+                { icon: '🎛️', text: '<strong>Uso:</strong> Permite filtrar de forma interactiva y visual (botones).' },
+                { icon: '📌', text: '<strong>Conexión:</strong> Vincular varias tablas dinámicas a una misma segmentación.' }
+            ]
+        });
+        slides.push({
+            title: 'Formato condicional avanzado',
+            level: 'intermedio',
+            content: [
+                { icon: '🎨', text: '<strong>Reglas con fórmulas:</strong> Inicio > Formato condicional > Nueva regla > Usar fórmula. Ej: =$A1>100' },
+                { icon: '📊', text: '<strong>Barras de datos y escalas de color:</strong> Visualización rápida de valores.' },
+                { icon: '🏷️', text: '<strong>Conjuntos de iconos:</strong> Flechas, semáforos, etc., para indicar tendencias.' }
+            ]
+        });
+        slides.push({
+            title: 'Validación de datos',
+            level: 'intermedio',
+            content: [
+                { icon: '✅', text: '<strong>Lista desplegable:</strong> Datos > Validación de datos > Permitir: Lista, Origen: escribir valores separados por comas o rango.' },
+                { icon: '📝', text: '<strong>Mensaje de entrada:</strong> Mostrar instrucciones al seleccionar la celda.' },
+                { icon: '⚠️', text: '<strong>Alerta de error:</strong> Personalizar mensaje cuando se ingresa un valor no válido.' }
+            ]
+        });
+
+        // ========== CURSO INTERMEDIO - DÍA 3 ==========
+        slides.push({
+            title: 'Funciones de texto: IZQUIERDA, DERECHA, EXTRAE',
+            level: 'intermedio',
+            content: [
+                { icon: '🔠', text: '<strong>IZQUIERDA:</strong> =IZQUIERDA(texto; num_caracteres) - extrae caracteres desde la izquierda.' },
+                { icon: '🔡', text: '<strong>DERECHA:</strong> =DERECHA(texto; num_caracteres) - desde la derecha.' },
+                { icon: '✂️', text: '<strong>EXTRAE:</strong> =EXTRAE(texto; pos_inicio; num_caracteres) - extrae desde una posición específica.' }
+            ]
+        });
+        slides.push({
+            title: 'CONCATENAR y TEXTOUNIR',
+            level: 'intermedio',
+            content: [
+                { icon: '🔗', text: '<strong>CONCATENAR:</strong> =CONCATENAR(texto1; texto2; ...) o usar el operador & (ej: A1 & " " & B1).' },
+                { icon: '🧵', text: '<strong>TEXTOUNIR:</strong> =TEXTOUNIR(delimitador; ignorar_vacío; texto1; ...) - más flexible.' },
+                { icon: '📇', text: '<strong>Ejemplo:</strong> =TEXTOUNIR(", "; VERDADERO; A1:A5) une los valores con coma y espacio.' }
+            ]
+        });
+        slides.push({
+            title: 'Funciones de fecha y hora',
+            level: 'intermedio',
+            content: [
+                { icon: '📅', text: '<strong>HOY:</strong> =HOY() - fecha actual.' },
+                { icon: '🕒', text: '<strong>AHORA:</strong> =AHORA() - fecha y hora actual.' },
+                { icon: '📆', text: '<strong>DIA, MES, AÑO:</strong> Extraen componentes de una fecha.' },
+                { icon: '📅', text: '<strong>DIAS.LAB:</strong> =DIAS.LAB(fecha_inicio; días; [feriados]) - calcula días hábiles.' }
+            ]
+        });
+        slides.push({
+            title: 'Referencias 3D (entre hojas)',
+            level: 'intermedio',
+            content: [
+                { icon: '📚', text: '<strong>Referencia 3D:</strong> Suma el mismo rango en varias hojas. Ej: =SUMA(Hoja1:Hoja3!A1)' },
+                { icon: '🔄', text: '<strong>Uso:</strong> Ideal para consolidar datos mensuales donde cada hoja es un mes.' },
+                { icon: '⚠️', text: '<strong>Nota:</strong> Las hojas deben estar contiguas en el orden.' }
+            ]
+        });
+        slides.push({
+            title: 'Consolidar datos de múltiples hojas',
+            level: 'intermedio',
+            content: [
+                { icon: '📊', text: '<strong>Consolidar por posición:</strong> Datos > Consolidar > Elegir función (SUMA, PROMEDIO, etc.) y agregar referencias.' },
+                { icon: '🔗', text: '<strong>Consolidar por etiqueta:</strong> Útil cuando los datos tienen filas/columnas con nombres.' },
+                { icon: '📌', text: '<strong>Crear vínculos:</strong> Opción "Crear vínculos con los datos de origen" para actualizar automáticamente.' }
+            ]
+        });
+        slides.push({
+            title: 'Macros: grabar y ejecutar',
+            level: 'intermedio',
+            content: [
+                { icon: '🎬', text: '<strong>Grabar macro:</strong> Vista > Macros > Grabar macro. Realiza acciones y Excel genera código VBA.' },
+                { icon: '▶️', text: '<strong>Ejecutar macro:</strong> Vista > Macros > Ver macros > Ejecutar.' },
+                { icon: '🔘', text: '<strong>Asignar a botón:</strong> Insertar un botón de formulario y asignar la macro.' },
+                { icon: '📖', text: '<strong>Introducción a VBA:</strong> Editor de VBA (Alt+F11) para modificar o escribir código.' }
+            ]
+        });
+        slides.push({
+            title: 'Resumen y siguientes pasos (Intermedio)',
+            level: 'intermedio',
+            content: [
+                { icon: '🌟', text: '<strong>Has aprendido:</strong> Funciones lógicas, búsquedas, tablas dinámicas, formato condicional, texto, fechas, macros.' },
+                { icon: '🚀', text: '<strong>Siguiente nivel:</strong> VBA avanzado, Power Query, Power Pivot, modelos de datos.' },
+                { icon: '💪', text: '<strong>Práctica:</strong> Crea un dashboard con tablas dinámicas y segmentaciones para un conjunto de datos real.' }
+            ]
+        });
+
+        // Total de diapositivas
+        const totalSlides = slides.length;
+
+        // Estado
+        let currentIndex = 0;
+
+        // Elementos DOM
+        const mainTitle = document.getElementById('mainTitle');
+        const badgeLevel = document.getElementById('badgeLevel');
+        const slideCounter = document.getElementById('slideCounter');
+        const slideContent = document.getElementById('slideContent');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indexBtn = document.getElementById('indexBtn');
+        const modal = document.getElementById('indexModal');
+        const indexList = document.getElementById('indexList');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        // Renderizar diapositiva
+        function renderSlide(index) {
+            const slide = slides[index];
+            if (!slide) return;
+
+            // Título y badge
+            const levelText = slide.level === 'intermedio' ? 'Intermedio' : 'Básico';
+            const levelClass = slide.level === 'intermedio' ? 'intermedio' : '';
+            mainTitle.textContent = (slide.level === 'intermedio' ? '📗' : '📘') + ' ' + slide.title;
+            badgeLevel.textContent = levelText;
+            badgeLevel.className = 'badge' + (slide.level === 'intermedio' ? ' intermedio' : '');
+            slideCounter.textContent = `${index+1} / ${totalSlides}`;
+
+            // Contenido
+            let html = `<h2 class="${levelClass}">${slide.title}</h2>`;
+            html += `<ul class="step-list">`;
+            slide.content.forEach(item => {
+                const liClass = slide.level === 'intermedio' ? 'intermedio' : '';
+                html += `<li class="${liClass}">`;
+                html += `<span class="icon">${item.icon || '📌'}</span>`;
+                html += `<span class="text">${item.text}</span>`;
+                html += `</li>`;
+            });
+            html += `</ul>`;
+            // Agregar un ejemplo o tip extra para algunas diapositivas (opcional)
+            if (slide.title.includes('BUSCARV')) {
+                html += `<div class="example-box ${levelClass}">🔍 <strong>Ejemplo:</strong> =BUSCARV("Manzana"; A2:B10; 2; FALSO) devuelve el precio de la manzana.</div>`;
+            }
+            if (slide.title.includes('Tablas dinámicas')) {
+                html += `<div class="tip">💡 <strong>Tip:</strong> Asegúrate de que tus datos tengan encabezados únicos antes de crear la tabla dinámica.</div>`;
+            }
+
+            slideContent.innerHTML = html;
+
+            // Actualizar botones
+            prevBtn.disabled = (index === 0);
+            nextBtn.textContent = (index === totalSlides - 1) ? '🏁 Finalizar' : 'Siguiente ▶';
+            // Cambiar clase primary según nivel
+            nextBtn.className = 'primary' + (slide.level === 'intermedio' ? ' intermedio' : '');
+        }
+
+        // Navegación
+        function goTo(index) {
+            if (index < 0) index = 0;
+            if (index >= totalSlides) index = totalSlides - 1;
+            currentIndex = index;
+            renderSlide(currentIndex);
+        }
+
+        prevBtn.addEventListener('click', () => goTo(currentIndex - 1));
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex === totalSlides - 1) {
+                alert('🎉 ¡Has completado todos los cursos! Revisa el índice para repasar.');
+                return;
+            }
+            goTo(currentIndex + 1);
+        });
+
+        // Índice - modal
+        function openIndex() {
+            let html = '';
+            slides.forEach((slide, idx) => {
+                const levelLabel = slide.level === 'intermedio' ? 'Intermedio' : 'Básico';
+                const badgeClass = slide.level === 'intermedio' ? 'intermedio' : '';
+                const icon = slide.level === 'intermedio' ? '📗' : '📘';
+                html += `<div class="index-item" data-index="${idx}">
+                            <span>${icon} ${slide.title}</span>
+                            <span class="idx-badge ${badgeClass}">${levelLabel}</span>
+                        </div>`;
+            });
+            indexList.innerHTML = html;
+            // Añadir event listeners a cada item
+            document.querySelectorAll('.index-item').forEach(el => {
+                el.addEventListener('click', function() {
+                    const idx = parseInt(this.dataset.index);
+                    goTo(idx);
+                    modal.classList.remove('active');
+                });
+            });
+            modal.classList.add('active');
+        }
+
+        indexBtn.addEventListener('click', openIndex);
+        closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+
+        // Inicializar
+        renderSlide(0);
+    </script>
+</body>
+</html>

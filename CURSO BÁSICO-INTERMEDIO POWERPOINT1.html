@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos PowerPoint - Básico e Intermedio</title>
+    <style>
+        /* ---------- RESET Y BASE ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .presentation-container {
+            max-width: 1200px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px 30px 30px;
+            transition: all 0.3s;
+        }
+
+        /* ---------- SELECTOR DE CURSO ---------- */
+        .course-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e9edf4;
+            padding-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .course-selector button {
+            background: #ecf0f3;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .course-selector button:hover {
+            background: #d5dde6;
+        }
+        .course-selector button.active-basico {
+            background: #3498db;
+            color: white;
+        }
+        .course-selector button.active-intermedio {
+            background: #9b59b6;
+            color: white;
+        }
+
+        /* ---------- HEADER ---------- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e9edf4;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .header .badge {
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .badge-basico {
+            background: #3498db;
+        }
+        .badge-intermedio {
+            background: #9b59b6;
+        }
+        .header .slide-counter {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        /* ---------- CONTENIDO ---------- */
+        .slide-content {
+            min-height: 420px;
+            padding: 10px 5px 20px;
+        }
+        .slide-content h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 6px solid #3498db;
+        }
+        .slide-content h2.intermedio {
+            border-left-color: #9b59b6;
+        }
+        .slide-content .step-list {
+            list-style: none;
+            padding: 0;
+        }
+        .slide-content .step-list li {
+            background: #f8faff;
+            margin-bottom: 16px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.6;
+            color: #1e2a3a;
+        }
+        .slide-content .step-list li.intermedio {
+            border-left-color: #9b59b6;
+        }
+        .slide-content .step-list li .icon {
+            font-size: 28px;
+            min-width: 40px;
+            text-align: center;
+        }
+        .slide-content .step-list li .text {
+            flex: 1;
+        }
+        .slide-content .step-list li .text strong {
+            color: #2c3e50;
+        }
+        .slide-content .example-box {
+            background: #f0f7ff;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin: 15px 0 10px;
+            border: 1px dashed #b3d4fc;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+        }
+        .slide-content .example-box.intermedio {
+            background: #f4f0fa;
+            border-color: #c9b8e6;
+        }
+        .slide-content .tip {
+            background: #fff9e6;
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin: 12px 0;
+            border-left: 5px solid #f1c40f;
+            font-size: 15px;
+        }
+        .slide-content .visual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .slide-content .visual-grid .item {
+            background: #ecf0f3;
+            border-radius: 8px;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* ---------- NAVEGACIÓN ---------- */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e9edf4;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .nav-buttons button {
+            background: #ecf0f3;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 15px;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-buttons button:hover {
+            background: #d5dde6;
+        }
+        .nav-buttons button.primary-basico {
+            background: #3498db;
+            color: white;
+        }
+        .nav-buttons button.primary-basico:hover {
+            background: #2980b9;
+        }
+        .nav-buttons button.primary-intermedio {
+            background: #9b59b6;
+            color: white;
+        }
+        .nav-buttons button.primary-intermedio:hover {
+            background: #8e44ad;
+        }
+        .index-btn {
+            background: #bdc3c7;
+            color: #2c3e50;
+        }
+        .index-btn:hover {
+            background: #a0a8af;
+        }
+
+        /* ---------- MODAL ÍNDICE ---------- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: white;
+            border-radius: 24px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-box h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #e9edf4;
+            padding-bottom: 12px;
+        }
+        .modal-box .index-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f3f8;
+            cursor: pointer;
+            transition: 0.1s;
+            color: #2c3e50;
+        }
+        .modal-box .index-item:hover {
+            background: #f7faff;
+            padding-left: 8px;
+        }
+        .modal-box .index-item .idx-badge {
+            background: #3498db;
+            color: white;
+            border-radius: 30px;
+            padding: 2px 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .modal-box .index-item .idx-badge.intermedio {
+            background: #9b59b6;
+        }
+        .close-modal {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .close-modal:hover {
+            background: #c0392b;
+        }
+
+        @media (max-width: 768px) {
+            .presentation-container { padding: 15px; }
+            .header h1 { font-size: 20px; }
+            .slide-content h2 { font-size: 22px; }
+            .nav-buttons button { padding: 8px 14px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container" id="app">
+        <!-- Selector de curso -->
+        <div class="course-selector">
+            <button id="btnBasico" class="active-basico">📘 PowerPoint Básico</button>
+            <button id="btnIntermedio">📙 PowerPoint Intermedio</button>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1 id="mainTitle">📘 PowerPoint Básico - Día 1</h1>
+            <div>
+                <span class="badge badge-basico" id="badgeLevel">Básico</span>
+                <span class="slide-counter" id="slideCounter">1 / 18</span>
+            </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="slide-content" id="slideContent">
+            <!-- Renderizado por JS -->
+        </div>
+
+        <!-- Navegación -->
+        <div class="navigation">
+            <div class="nav-buttons">
+                <button id="prevBtn">◀ Anterior</button>
+                <button id="nextBtn" class="primary-basico">Siguiente ▶</button>
+            </div>
+            <div class="nav-buttons">
+                <button id="indexBtn" class="index-btn">📋 Índice</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal índice -->
+    <div class="modal-overlay" id="indexModal">
+        <div class="modal-box">
+            <h3 id="modalTitle">📋 Índice - PowerPoint Básico</h3>
+            <div id="indexList"></div>
+            <button class="close-modal" id="closeModalBtn">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        // DEFINICIÓN DE CURSOS
+        // ================================================================
+
+        // ---------- CURSO POWERPOINT BÁSICO (18 diapositivas, 3 días) ----------
+        const cursoBasico = [];
+
+        // Día 1: Introducción, interfaz, creación, diseño, texto, imágenes, formas
+        cursoBasico.push({
+            title: 'Introducción a PowerPoint',
+            content: [
+                { icon: '🖥️', text: '<strong>¿Qué es PowerPoint?</strong> Herramienta de presentaciones de Microsoft, usada para crear diapositivas con texto, imágenes, gráficos y multimedia.' },
+                { icon: '🎯', text: '<strong>Objetivo del curso:</strong> Aprender a crear presentaciones atractivas y funcionales desde cero.' },
+                { icon: '📅', text: '<strong>Estructura:</strong> 3 días con teoría, ejemplos y ejercicios prácticos.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Interfaz de PowerPoint',
+            content: [
+                { icon: '📌', text: '<strong>Elementos principales:</strong> Barra de título, Cinta de opciones (pestañas: Inicio, Insertar, Diseño, etc.), Panel de diapositivas, Área de trabajo, Barra de estado.' },
+                { icon: '🔍', text: '<strong>Vistas:</strong> Normal, Clasificador de diapositivas, Lectura, Presentación con diapositivas.' },
+                { icon: '📐', text: '<strong>Panel de diapositivas:</strong> Muestra miniaturas de todas las diapositivas. Permite reorganizar y duplicar.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Crear una nueva presentación',
+            content: [
+                { icon: '📄', text: '<strong>Nuevo:</strong> Archivo > Nuevo > Presentación en blanco o usar una plantilla.' },
+                { icon: '➕', text: '<strong>Agregar diapositiva:</strong> Inicio > Nueva diapositiva o Ctrl+M.' },
+                { icon: '📋', text: '<strong>Elegir diseño:</strong> En el menú de Nueva diapositiva, seleccionar Título, Título y contenido, Comparación, etc.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Diseño y temas',
+            content: [
+                { icon: '🎨', text: '<strong>Diseño de diapositiva:</strong> Inicio > Diseño para cambiar la distribución de la diapositiva actual.' },
+                { icon: '🌈', text: '<strong>Temas:</strong> Pestaña Diseño > seleccionar un tema (colores, fuentes y efectos predefinidos).' },
+                { icon: '🖌️', text: '<strong>Variantes:</strong> Cambiar colores, fuentes o efectos dentro del mismo tema.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Insertar y editar texto',
+            content: [
+                { icon: '✏️', text: '<strong>Cuadro de texto:</strong> Insertar > Cuadro de texto y dibujar en la diapositiva.' },
+                { icon: '📝', text: '<strong>Editar texto:</strong> Clic en el marcador de posición o cuadro de texto y escribir.' },
+                { icon: '🔤', text: '<strong>Formato:</strong> Inicio > Fuente (tipo, tamaño, negrita, color, etc.).' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Insertar imágenes',
+            content: [
+                { icon: '🖼️', text: '<strong>Desde archivo:</strong> Insertar > Imágenes > Este dispositivo... y seleccionar.' },
+                { icon: '🌐', text: '<strong>Imágenes en línea:</strong> Insertar > Imágenes > Imágenes de archivo (Bing, OneDrive).' },
+                { icon: '✂️', text: '<strong>Recortar y ajustar:</strong> Seleccionar imagen > Formato > Recortar, y ajustar brillo/contraste.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Insertar formas y diagramas',
+            content: [
+                { icon: '🔷', text: '<strong>Formas:</strong> Insertar > Formas > elegir rectángulo, círculo, flecha, etc. y dibujar.' },
+                { icon: '🎨', text: '<strong>Formato de forma:</strong> Relleno, contorno, efectos (sombra, reflejo).' },
+                { icon: '🔗', text: '<strong>Conectores:</strong> Usar líneas con conectores para diagramas de flujo.' }
+            ]
+        });
+        // Día 2: Listas, tablas, gráficos, SmartArt, transiciones
+        cursoBasico.push({
+            title: 'Listas con viñetas y numeración',
+            content: [
+                { icon: '📋', text: '<strong>Viñetas:</strong> Seleccionar texto > Inicio > Viñetas (punto, guión, etc.).' },
+                { icon: '🔢', text: '<strong>Numeración:</strong> Inicio > Numeración (1, 2, 3 o a, b, c).' },
+                { icon: '📐', text: '<strong>Aumentar/disminuir sangría:</strong> Usar los botones en Inicio para jerarquizar.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Insertar tablas',
+            content: [
+                { icon: '📊', text: '<strong>Insertar tabla:</strong> Insertar > Tabla > elegir número de filas y columnas.' },
+                { icon: '✏️', text: '<strong>Editar:</strong> Clic en celdas, agregar texto, y usar Diseño de tabla para estilos.' },
+                { icon: '🎨', text: '<strong>Estilos:</strong> Diseño > Estilos de tabla para aplicar colores y bordes.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Insertar gráficos (barras, columnas, líneas)',
+            content: [
+                { icon: '📈', text: '<strong>Insertar gráfico:</strong> Insertar > Gráfico > elegir tipo (columna, barra, línea, circular).' },
+                { icon: '📊', text: '<strong>Editar datos:</strong> Se abre una hoja de Excel para ingresar o pegar datos.' },
+                { icon: '🎨', text: '<strong>Diseño y formato:</strong> Herramientas de gráfico > Diseño para cambiar colores y estilos.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'SmartArt - diagramas y organigramas',
+            content: [
+                { icon: '🧩', text: '<strong>Insertar SmartArt:</strong> Insertar > SmartArt > elegir un tipo (jerarquía, proceso, ciclo, etc.).' },
+                { icon: '✏️', text: '<strong>Escribir texto:</strong> En el panel de texto o directamente en las formas.' },
+                { icon: '🎨', text: '<strong>Cambiar diseño:</strong> Herramientas de SmartArt > Diseño para cambiar colores y estilo.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Transiciones entre diapositivas',
+            content: [
+                { icon: '🔄', text: '<strong>Aplicar transición:</strong> Seleccionar diapositiva > Transiciones > elegir un efecto (desvanecer, empujar, etc.).' },
+                { icon: '⏱️', text: '<strong>Duración y avance:</strong> Configurar duración, y opción "Al hacer clic" o "Después de" tiempo.' },
+                { icon: '🔁', text: '<strong>Aplicar a todas:</strong> Botón "Aplicar a todas" para usar la misma transición en todas las diapositivas.' }
+            ]
+        });
+        // Día 3: Animaciones básicas, revisión, guardar, imprimir, presentación
+        cursoBasico.push({
+            title: 'Animaciones básicas (entrada, énfasis, salida)',
+            content: [
+                { icon: '✨', text: '<strong>Agregar animación:</strong> Seleccionar objeto > Animaciones > elegir efecto (entrada, énfasis, salida).' },
+                { icon: '⏳', text: '<strong>Configurar:</strong> Opciones de efectos (dirección, duración, inicio: al hacer clic, con anterior, después).' },
+                { icon: '📋', text: '<strong>Panel de animación:</strong> Permite ordenar y ajustar la temporización de varias animaciones.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Revisión ortográfica y comentarios',
+            content: [
+                { icon: '✅', text: '<strong>Revisar ortografía:</strong> Revisar > Ortografía > se resaltan errores y sugiere correcciones.' },
+                { icon: '💬', text: '<strong>Insertar comentario:</strong> Revisar > Nuevo comentario para dejar notas en diapositivas.' },
+                { icon: '✏️', text: '<strong>Responder y resolver:</strong> En los comentarios, se puede responder y marcarlos como resueltos.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Guardar y exportar presentación',
+            content: [
+                { icon: '💾', text: '<strong>Guardar:</strong> Ctrl+G o Archivo > Guardar como > elegir ubicación y nombre.' },
+                { icon: '📄', text: '<strong>Exportar a PDF:</strong> Archivo > Exportar > Crear PDF/XPS.' },
+                { icon: '🎞️', text: '<strong>Exportar a video:</strong> Archivo > Exportar > Crear un vídeo (MP4 o WMV).' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Configurar presentación con diapositivas',
+            content: [
+                { icon: '▶️', text: '<strong>Iniciar presentación:</strong> F5 (desde el principio) o Mayús+F5 (desde diapositiva actual).' },
+                { icon: '🖱️', text: '<strong>Navegación:</strong> Clic o teclas Av/Re, tecla ESC para salir.' },
+                { icon: '✏️', text: '<strong>Anotaciones:</strong> Durante la presentación, usar el lápiz o resaltador para marcar.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Impresión de diapositivas',
+            content: [
+                { icon: '🖨️', text: '<strong>Imprimir:</strong> Archivo > Imprimir. Elegir impresora y configuración.' },
+                { icon: '📋', text: '<strong>Diseño de impresión:</strong> Diapositivas completas, Notas, Esquema, o Documentos (2, 3, 6 diapositivas por página).' },
+                { icon: '📐', text: '<strong>Ajustes:</strong> Orientación, tamaño de papel, márgenes.' }
+            ]
+        });
+        cursoBasico.push({
+            title: 'Resumen y consejos (Básico)',
+            content: [
+                { icon: '🌟', text: '<strong>Has aprendido:</strong> Crear presentaciones, insertar texto, imágenes, formas, tablas, gráficos, SmartArt, transiciones, animaciones básicas, revisión, guardar, imprimir y presentar.' },
+                { icon: '🚀', text: '<strong>Siguiente nivel:</strong> PowerPoint Intermedio para dominar diapositivas maestras, animaciones avanzadas, multimedia y más.' },
+                { icon: '💪', text: '<strong>Práctica:</strong> Crea una presentación de 10 diapositivas sobre un tema de tu interés aplicando todo lo aprendido.' }
+            ]
+        });
+
+        // ---------- CURSO POWERPOINT INTERMEDIO (18 diapositivas, 3 días) ----------
+        const cursoIntermedio = [];
+
+        // Día 1: Patrón de diapositivas, plantillas, encabezados/pies, numeración
+        cursoIntermedio.push({
+            title: 'Diapositiva maestra (patrón)',
+            content: [
+                { icon: '👑', text: '<strong>¿Qué es?</strong> El patrón de diapositivas controla el diseño, fuentes, colores y elementos que aparecen en todas las diapositivas.' },
+                { icon: '🔧', text: '<strong>Acceso:</strong> Vista > Patrón de diapositivas. Se abre una vista especial.' },
+                { icon: '✏️', text: '<strong>Edición:</strong> Modifica el patrón principal o los diseños secundarios. Los cambios se aplican a toda la presentación.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Personalizar el patrón de diapositivas',
+            content: [
+                { icon: '🎨', text: '<strong>Agregar logotipo:</strong> Insertar imagen en el patrón principal, aparecerá en todas las diapositivas.' },
+                { icon: '📐', text: '<strong>Cambiar marcadores de posición:</strong> Ajustar tamaño y posición de los cuadros de texto.' },
+                { icon: '💡', text: '<strong>Consejo:</strong> Cerrar patrón al terminar (Cerrar vista patrón).' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Crear y guardar plantillas (.potx)',
+            content: [
+                { icon: '📄', text: '<strong>Guardar como plantilla:</strong> Archivo > Guardar como > elegir "Plantilla de PowerPoint (*.potx)".' },
+                { icon: '📂', text: '<strong>Usar plantilla:</strong> Archivo > Nuevo > Personalizar > seleccionar la plantilla guardada.' },
+                { icon: '🔄', text: '<strong>Ventaja:</strong> Mantiene consistencia en toda la organización.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Encabezados, pies de página y numeración',
+            content: [
+                { icon: '📌', text: '<strong>Insertar:</strong> Insertar > Encabezado y pie de página.' },
+                { icon: '📅', text: '<strong>Configurar:</strong> Fecha y hora, número de diapositiva, pie de página (texto fijo).' },
+                { icon: '🔢', text: '<strong>Numeración:</strong> Activar "Número de diapositiva" y elegir posición en el patrón.' }
+            ]
+        });
+        // Día 2: Animaciones avanzadas, audio/video, hipervínculos, acciones
+        cursoIntermedio.push({
+            title: 'Animaciones avanzadas (trayectorias)',
+            content: [
+                { icon: '🔄', text: '<strong>Trayectoria personalizada:</strong> Animaciones > Trayectoria de movimiento > dibujar una ruta.' },
+                { icon: '⏱️', text: '<strong>Temporización avanzada:</strong> Configurar inicio, duración y retraso en el panel de animación.' },
+                { icon: '🔁', text: '<strong>Repetir:</strong> Opción de repetición (hasta que se haga clic, o un número de veces).' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Animaciones en cadena (con disparadores)',
+            content: [
+                { icon: '⏯️', text: '<strong>Disparadores:</strong> Iniciar una animación al hacer clic en un objeto específico.' },
+                { icon: '📋', text: '<strong>Configurar:</strong> Panel de animación > Opciones de efectos > Temporización > Disparadores > Iniciar efecto al hacer clic en...' },
+                { icon: '🎯', text: '<strong>Útil:</strong> Crear presentaciones interactivas, menús, botones.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Insertar audio y video',
+            content: [
+                { icon: '🎵', text: '<strong>Insertar audio:</strong> Insertar > Audio > Audio en mi PC o Grabar audio.' },
+                { icon: '🎬', text: '<strong>Insertar video:</strong> Insertar > Video > Este dispositivo, o Video en línea (YouTube).' },
+                { icon: '🎛️', text: '<strong>Opciones de reproducción:</strong> Inicio automático o al hacer clic, reproducción en bucle, ocultar durante la presentación.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Hipervínculos y acciones',
+            content: [
+                { icon: '🔗', text: '<strong>Hipervínculo:</strong> Seleccionar objeto > Insertar > Hipervínculo > enlazar a diapositiva, archivo externo, página web o correo.' },
+                { icon: '⚡', text: '<strong>Acciones:</strong> Insertar > Acción > Configurar al hacer clic o al pasar el mouse (ejecutar programa, macro, reproducir sonido).' },
+                { icon: '🎯', text: '<strong>Ejemplo:</strong> Crear un menú interactivo con botones que vayan a diferentes secciones.' }
+            ]
+        });
+        // Día 3: Combinar correspondencia, presentaciones personalizadas, proteger, exportar a video, trucos
+        cursoIntermedio.push({
+            title: 'Combinar correspondencia en PowerPoint',
+            content: [
+                { icon: '📇', text: '<strong>¿Qué es?</strong> Crear varias diapositivas personalizadas a partir de una lista de datos (ej. nombres, empresas).' },
+                { icon: '🔗', text: '<strong>Pasos:</strong> Revisar > Combinar correspondencia > Usar lista existente (Excel) > Insertar campos combinados.' },
+                { icon: '📄', text: '<strong>Resultado:</strong> Diapositivas individuales para cada registro, ideales para certificados o tarjetas.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Presentaciones personalizadas (secciones)',
+            content: [
+                { icon: '📂', text: '<strong>Crear secciones:</strong> Clic derecho en el panel de miniaturas > Agregar sección. Permite organizar por temas.' },
+                { icon: '🎯', text: '<strong>Presentación personalizada:</strong> Presentación con diapositivas > Presentaciones personalizadas > Nueva. Elegir diapositivas específicas.' },
+                { icon: '🔄', text: '<strong>Ventaja:</strong> Mostrar solo partes de la presentación a diferentes audiencias.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Proteger presentación con contraseña',
+            content: [
+                { icon: '🔒', text: '<strong>Proteger con contraseña:</strong> Archivo > Información > Proteger presentación > Cifrar con contraseña.' },
+                { icon: '🔑', text: '<strong>Escribir y confirmar contraseña.</strong> Se necesitará para abrir el archivo.' },
+                { icon: '⚠️', text: '<strong>Importante:</strong> Guarda la contraseña en un lugar seguro, no se puede recuperar.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Exportar a video y otros formatos',
+            content: [
+                { icon: '🎞️', text: '<strong>Exportar a MP4:</strong> Archivo > Exportar > Crear un vídeo > elegir calidad y tiempo de cada diapositiva.' },
+                { icon: '📄', text: '<strong>Exportar a PDF:</strong> Archivo > Exportar > Crear PDF/XPS. Incluye todas las diapositivas.' },
+                { icon: '🖼️', text: '<strong>Guardar diapositivas como imágenes:</strong> Archivo > Guardar como > seleccionar formato de imagen (JPEG, PNG).' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Trucos para presentaciones profesionales',
+            content: [
+                { icon: '🖥️', text: '<strong>Modo de presentación con notas:</strong> Usar el modo de presentador para ver notas y controles.' },
+                { icon: '✏️', text: '<strong>Anotaciones en vivo:</strong> Durante la presentación, usar lápices digitales o resaltadores.' },
+                { icon: '🎯', text: '<strong>Consejo:</strong> Practicar con el modo de presentación para familiarizarse con los controles.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Atajos de teclado esenciales',
+            content: [
+                { icon: '⌨️', text: '<strong>F5:</strong> Iniciar presentación desde el principio.' },
+                { icon: '⌨️', text: '<strong>Mayús+F5:</strong> Iniciar desde la diapositiva actual.' },
+                { icon: '⌨️', text: '<strong>B / W:</strong> Pantalla en negro/blanco durante la presentación.' },
+                { icon: '⌨️', text: '<strong>Ctrl+S:</strong> Guardar.' },
+                { icon: '⌨️', text: '<strong>Ctrl+Z:</strong> Deshacer.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Integración con otros programas (Word, Excel)',
+            content: [
+                { icon: '🔗', text: '<strong>Insertar objeto:</strong> Insertar > Objeto > Crear desde archivo para incrustar hojas de Excel o documentos Word.' },
+                { icon: '📊', text: '<strong>Vinculación:</strong> Al insertar un objeto, elegir "Vincular" para que se actualice automáticamente al cambiar el origen.' },
+                { icon: '📋', text: '<strong>Copiar y pegar especial:</strong> Desde Excel, copiar rango y pegar como tabla en PowerPoint manteniendo formato.' }
+            ]
+        });
+        cursoIntermedio.push({
+            title: 'Resumen y siguientes pasos (Intermedio)',
+            content: [
+                { icon: '🌟', text: '<strong>Has aprendido:</strong> Patrón de diapositivas, plantillas, encabezados/pies, animaciones avanzadas, multimedia, hipervínculos, combinación de correspondencia, protección, exportación y trucos profesionales.' },
+                { icon: '🚀', text: '<strong>Siguiente nivel:</strong> Explorar VBA para PowerPoint, complementos, y diseño avanzado con herramientas externas.' },
+                { icon: '💪', text: '<strong>Proyecto final:</strong> Crea una presentación interactiva con menús, vídeos y animaciones complejas sobre un tema de tu elección.' }
+            ]
+        });
+
+        // ================================================================
+        // LÓGICA DE LA APLICACIÓN
+        // ================================================================
+
+        let currentCourse = 'basico'; // 'basico' o 'intermedio'
+        let currentIndex = 0;
+
+        // Obtener diapositivas según el curso
+        function getSlides() {
+            return currentCourse === 'basico' ? cursoBasico : cursoIntermedio;
+        }
+
+        function getTotalSlides() {
+            return getSlides().length;
+        }
+
+        // Elementos DOM
+        const mainTitle = document.getElementById('mainTitle');
+        const badgeLevel = document.getElementById('badgeLevel');
+        const slideCounter = document.getElementById('slideCounter');
+        const slideContent = document.getElementById('slideContent');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indexBtn = document.getElementById('indexBtn');
+        const modal = document.getElementById('indexModal');
+        const indexList = document.getElementById('indexList');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modalTitle = document.getElementById('modalTitle');
+        const btnBasico = document.getElementById('btnBasico');
+        const btnIntermedio = document.getElementById('btnIntermedio');
+
+        // Renderizar diapositiva
+        function renderSlide(index) {
+            const slides = getSlides();
+            const slide = slides[index];
+            if (!slide) return;
+
+            const isIntermedio = currentCourse === 'intermedio';
+            const nivelText = isIntermedio ? 'Intermedio' : 'Básico';
+            const icono = isIntermedio ? '📙' : '📘';
+            mainTitle.textContent = `${icono} PowerPoint ${nivelText} - Día ${Math.floor(index/6)+1}`;
+            badgeLevel.textContent = nivelText;
+            badgeLevel.className = `badge ${isIntermedio ? 'badge-intermedio' : 'badge-basico'}`;
+            slideCounter.textContent = `${index+1} / ${getTotalSlides()}`;
+
+            let html = `<h2 class="${isIntermedio ? 'intermedio' : ''}">${slide.title}</h2>`;
+            html += `<ul class="step-list">`;
+            slide.content.forEach(item => {
+                const liClass = isIntermedio ? 'intermedio' : '';
+                html += `<li class="${liClass}">`;
+                html += `<span class="icon">${item.icon || '📌'}</span>`;
+                html += `<span class="text">${item.text}</span>`;
+                html += `</li>`;
+            });
+            html += `</ul>`;
+
+            // Agregar elementos visuales adicionales para ciertas diapositivas
+            if (slide.title.includes('Patrón de diapositivas')) {
+                html += `<div class="tip">💡 <strong>Tip:</strong> El patrón principal afecta a todas las diapositivas, pero puedes modificar diseños individuales para variaciones.</div>`;
+            }
+            if (slide.title.includes('Hipervínculos')) {
+                html += `<div class="example-box ${isIntermedio ? 'intermedio' : ''}">🔗 <strong>Ejemplo:</strong> Crea un botón con hipervínculo a la diapositiva 5 para simular un menú.</div>`;
+            }
+            if (slide.title.includes('Combinar correspondencia')) {
+                html += `<div class="visual-grid">
+                            <div class="item">📋 Lista en Excel</div>
+                            <div class="item">➡️</div>
+                            <div class="item">🖨️ Diapositivas personalizadas</div>
+                        </div>`;
+            }
+
+            slideContent.innerHTML = html;
+
+            // Botones
+            prevBtn.disabled = (index === 0);
+            const isLast = (index === getTotalSlides() - 1);
+            nextBtn.textContent = isLast ? '🏁 Finalizar' : 'Siguiente ▶';
+            nextBtn.className = `primary-${isIntermedio ? 'intermedio' : 'basico'}`;
+        }
+
+        function goTo(index) {
+            const total = getTotalSlides();
+            if (index < 0) index = 0;
+            if (index >= total) index = total - 1;
+            currentIndex = index;
+            renderSlide(currentIndex);
+        }
+
+        function changeCourse(course) {
+            if (course === currentCourse) return;
+            currentCourse = course;
+            currentIndex = 0;
+            // Actualizar botones de selector
+            btnBasico.className = course === 'basico' ? 'active-basico' : '';
+            btnIntermedio.className = course === 'intermedio' ? 'active-intermedio' : '';
+            renderSlide(0);
+            // Actualizar badge y título en el modal
+            const nivel = course === 'intermedio' ? 'Intermedio' : 'Básico';
+            modalTitle.textContent = `📋 Índice - PowerPoint ${nivel}`;
+        }
+
+        // Eventos de navegación
+        prevBtn.addEventListener('click', () => goTo(currentIndex - 1));
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex === getTotalSlides() - 1) {
+                alert(`🎉 ¡Has completado el curso de PowerPoint ${currentCourse === 'intermedio' ? 'Intermedio' : 'Básico'}! Revisa el índice para repasar.`);
+                return;
+            }
+            goTo(currentIndex + 1);
+        });
+
+        // Selector de curso
+        btnBasico.addEventListener('click', () => changeCourse('basico'));
+        btnIntermedio.addEventListener('click', () => changeCourse('intermedio'));
+
+        // Índice - modal
+        function openIndex() {
+            const slides = getSlides();
+            const isIntermedio = currentCourse === 'intermedio';
+            let html = '';
+            slides.forEach((slide, idx) => {
+                const day = Math.floor(idx/6) + 1;
+                html += `<div class="index-item" data-index="${idx}">
+                            <span>${isIntermedio ? '📙' : '📘'} ${slide.title}</span>
+                            <span class="idx-badge ${isIntermedio ? 'intermedio' : ''}">Día ${day}</span>
+                        </div>`;
+            });
+            indexList.innerHTML = html;
+            document.querySelectorAll('.index-item').forEach(el => {
+                el.addEventListener('click', function() {
+                    const idx = parseInt(this.dataset.index);
+                    goTo(idx);
+                    modal.classList.remove('active');
+                });
+            });
+            modal.classList.add('active');
+        }
+
+        indexBtn.addEventListener('click', openIndex);
+        closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+
+        // Inicializar con el curso básico
+        changeCourse('basico');
+    </script>
+</body>
+</html>
